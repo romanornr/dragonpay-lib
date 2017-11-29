@@ -6,6 +6,10 @@
         {
             "name": "romanornr",
             "email": "romanornr@gmail.com"
+        },
+        {
+            "name": "Uboh Yoshin",
+            "email": "ubohyoshin@protonmail.com"
         }
     ],
     "minimum-stability": "dev",

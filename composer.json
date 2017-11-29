@@ -13,7 +13,9 @@
         }
     ],
     "minimum-stability": "dev",
-    "require": {},
+    "require": {
+        "bitwasp/bitcoin": "v0.0.34.1"
+    },
     "autoload":{
     	"psr-4": {
 	  "Dragonpay\\": "src/"

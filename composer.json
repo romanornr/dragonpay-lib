@@ -1,0 +1,20 @@
+{
+    "name": "romanornr/dragonpay",
+    "description": "Bitcoin payments in PHP package",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "romanornr",
+            "email": "romanornr@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload":{
+    	"psr-4": {
+	  "romanornr\\dragonpay": "src/"
+	}
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

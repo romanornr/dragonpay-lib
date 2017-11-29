@@ -12,7 +12,7 @@
     "require": {},
     "autoload":{
     	"psr-4": {
-	  "romanornr\\dragonpay": "src/"
+	  "Dragonpay\\": "src/"
 	}
     },
     "minimum-stability": "dev",

@@ -22,11 +22,6 @@ class DragonPay
     public function __construct($explorer)
     {
         $this->explorer = $explorer;
-
-        $builder = new RequestBuilder();
-        $builder->setTime(time()); // this is required
-        /* set other details */
-        $request = $builder->getPaymentRequest();
     }
 
 	/**
@@ -40,6 +35,14 @@ class DragonPay
 
 		return count($transactions);
 	}
+
+	public function test()
+    {
+        $builder = new RequestBuilder();
+        $builder->setTime(time()); // this is required
+        /* set other details */
+        $request = $builder->getPaymentRequest();
+    }
 
     /**
      *

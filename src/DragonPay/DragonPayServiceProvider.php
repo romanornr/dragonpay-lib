@@ -23,8 +23,9 @@ class DragonPayServiceProvider extends ServiceProvider
      */
     public function register()
     {
+
         $this->app->singleton('dragonpay', function() {
-            return new DragonPay();
+            return new DragonPay(null);
         });
     }
 }

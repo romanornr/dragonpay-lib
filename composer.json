@@ -18,9 +18,18 @@
     },
     "autoload":{
     	"psr-4": {
-	  "Dragonpay\\": "src/"
-	}
+        "DragonPay\\": "src/"
+      }
     },
-    "minimum-stability": "dev",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "extra": {
+        "laravel": {
+            "providers": [
+                "DragonPay\\DragonPayServiceProvider"
+            ],
+            "aliases": {
+                "DragonPay": "DragonPay\\Facades\\DragonPay"
+            }
+        }
+    }
 }

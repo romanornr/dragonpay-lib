@@ -22,11 +22,11 @@ class DragonPay
     public function __construct($explorer)
     {
         $this->explorer = $explorer;
-    }
 
-    public function test()
-    {
-
+        $builder = new RequestBuilder();
+        $builder->setTime(time()); // this is required
+        /* set other details */
+        $request = $builder->getPaymentRequest();
     }
 
 	/**
@@ -76,6 +76,7 @@ class DragonPay
 $dragon = new DragonPay(null);
 //$test = $dragon->test();
 //
-var_dump($dragon->test());
+//var_dump($dragon->test());
+
 
 

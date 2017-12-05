@@ -2,6 +2,7 @@
 
 namespace DragonPay;
 
+use BitWasp\Bitcoin\Address\AddressFactory;
 use BitWasp\Bitcoin\Crypto\Random\Random;
 use BitWasp\Bitcoin\Math\Math;
 use BitWasp\Bitcoin\PaymentProtocol\HttpResponse;
@@ -53,16 +54,7 @@ class DragonPay
 
 	public function builtAddress()
     {
-        $builder = new RequestBuilder();
-        $builder->setTime(1);
-        $pubkey = PublicKeyFactory::fromHex('0496b538e853519c726a2c91e61ec11600ae1390813a627c66fb8be7947be63c52da7589379515d4e0a604f8141781e62294721166bf621e73a82cbf2342c858ee');
-        $address = AddressFactory::fromKey($pubkey);
-        $script = ScriptFactory::scriptPubKey()->payToAddress($address);
 
-        $builder->addAddressPayment($address, 50);
-        $request = $builder->getPaymentDetails();
-        $output = $request->getOutputs();
-        return dd($address);
     }
 
     // Step 0: Buyer clicks purchase on the website
@@ -72,25 +64,30 @@ class DragonPay
     {
         $math = new Math();
         $random = new Random();
+        $time = time();
 
         $http = new HttpResponse();
         $merchantRandom = $random->bytes(16);
-        $destination = ScriptFactory::sequence([Opcodes::OP_DUP, Opcodes::OP_HASH160, $random->bytes(20), Opcodes::OP_EQUALVERIFY, Opcodes::OP_CHECKSIG]);
-        $output = new TransactionOutput($amount, $destination);
-       // $requestSigner = RequestSigner::sha256($this->getKey(), $this->getCert());
+        $destination = '1KmftT8rrcQJ6msn81hJPWrgoVBkkud5NH';
+        $paymentUrl = 'http://127.0.0.1:8080/payment?time=' . $time;
+
+        $address = AddressFactory::fromString($destination);
         $builder = new RequestBuilder();
         $builder
-            ->setTime(time())
+            ->setTime($time)
             ->setExpires((new \DateTime('+1h'))->getTimestamp())
-            ->setMemo('Payment for 1 shoes')
+            ->setMemo('Payment for 1 item')
             ->setMerchantData($merchantRandom->getBinary())
             ->setNetwork('main')
-            ->setOutputs([$output])
-            ->setPaymentUrl('https://example.com/payment');
-           // ->setSigner($requestSigner)
-        //return dd($builder);
-       $request = $builder->getPaymentRequest();
-       return dd($request);
+            ->setPaymentUrl($paymentUrl)
+            ->addAddressPayment($address, $amount);
+
+        $encodedUrl = urlencode($paymentUrl);
+        $uri = "bitcoin:{$destination}?r={$encodedUrl}&amount={$amount}";
+        $qr = urlencode($uri);
+        echo "<a href='{$uri}'>Pay<img src='https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl={$qr}'></a>";
+        return;
+
     }
 
     /**

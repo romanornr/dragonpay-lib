@@ -47,7 +47,7 @@
                                     Send <span class="payment-details-styled">0.02615909</span> bitcoin
                                     <br> to this bitcoin address
                                     <br>
-                                    <span class="payment-details-styled">16rCmCmbuWDhPjWTrpQGaU3EPdZF7MTdUk</span>
+                                    <span class="payment-details-styled">{{ $paymentAddress }}</span>
                                     <br>
                                     <a href="#" class="btn btn-secondary" role="button">Need Help</a>
                                     <a href="#" class="btn btn-primary" role="button">Pay from wallet</a>

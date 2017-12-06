@@ -39,7 +39,7 @@ class DragonPay
         $address = $master->getPublicKey();
         $orderAddress = $address->getAddress()->getAddress($this->network);
 
-        return dd($orderAddress);
+        return $orderAddress;
     }
 
 

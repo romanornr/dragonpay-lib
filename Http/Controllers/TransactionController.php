@@ -10,7 +10,8 @@ class TransactionController extends Controller
 {
     public function test()
     {
-        return dd('hi');
+        $paymentAddress = DragonPay::createTransactionAddress(1);
+        return view('DragonPay::index', ['paymentAddress' => $paymentAddress]);
     }
 
 }

@@ -38,7 +38,7 @@
                         <div class="payment-section">
                             <a class="payment-info-text">
               Do not pay this invoice from Coinbase wallet or a bitcoin exchange account. Exchanges and especially Coinbase do not broadcast the bitcoin payment in time, thus resulting in failure. Use the following bitcoin wallets instead: Trezor, Ledger, samouraiwallet, Copay, Electrum, Greenadress. 
-              </a>Mi
+              </a>
                             <div class="media">
                                 <div class="media-left payment-qr">
                                     <img class="media-object" src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/QR_code_for_mobile_English_Wikipedia.svg/1200px-QR_code_for_mobile_English_Wikipedia.svg.png" width="200px">

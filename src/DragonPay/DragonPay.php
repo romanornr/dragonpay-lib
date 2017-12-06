@@ -32,11 +32,8 @@ class DragonPay
         $this->xpub = 'xpub661MyMwAqRbcGtwgccWjqwtZZhPhtTkuUHc9A86jkEsh8XSbYfMS6WDpSc7qGUyRHdvxJPsjaCQJanwJkjxJxofJT6igsnGhsE5f7wv94Yt';
     }
 
-    public function test($orderid)
+    public function createTransactionAddress($orderid)
     {
-        //$currency = 'bitcoin';
-        //$network = Bitcoin::getNetwork();
-        //$xpub = 'xpub661MyMwAqRbcGtwgccWjqwtZZhPhtTkuUHc9A86jkEsh8XSbYfMS6WDpSc7qGUyRHdvxJPsjaCQJanwJkjxJxofJT6igsnGhsE5f7wv94Yt';
         $hk = HierarchicalKeyFactory::fromExtended($this->xpub, $this->network);
         $master = $hk->derivePath("0/0/0/{$orderid}");
         $address = $master->getPublicKey();

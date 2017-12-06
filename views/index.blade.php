@@ -9,7 +9,8 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/style.css">
+   <!-- <link rel="stylesheet" href="vendor/DragonPay/css/style.css">-->
+    <link rel="stylesheet" href="{!! asset('vendor/DragonPay/css/style.css') !!}">
 </head>
 
 <body>
@@ -27,7 +28,7 @@
                     <div class="card-block">
 
                         <div class="payment-logo">
-                            <img src="https://cdn.pixabay.com/photo/2013/12/08/12/12/bitcoin-225079_1280.png">
+                           <!-- <img src="https://halongmining.com/wp-content/uploads/2017/11/cropped-Website-Header-v1a_full_width-2-1.jpg">-->
                         </div>
                         <div class="payment-info">
                             <div class="card-title payment-title">Halong mining</div>
@@ -37,7 +38,7 @@
                         <div class="payment-section">
                             <a class="payment-info-text">
               Do not pay this invoice from Coinbase wallet or a bitcoin exchange account. Exchanges and especially Coinbase do not broadcast the bitcoin payment in time, thus resulting in failure. Use the following bitcoin wallets instead: Trezor, Ledger, samouraiwallet, Copay, Electrum, Greenadress. 
-              </a>
+              </a>Mi
                             <div class="media">
                                 <div class="media-left payment-qr">
                                     <img class="media-object" src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/QR_code_for_mobile_English_Wikipedia.svg/1200px-QR_code_for_mobile_English_Wikipedia.svg.png" width="200px">

@@ -1,25 +1,8 @@
 <?php
 
 namespace DragonPay;
-
-use BitWasp\Bitcoin\Address\AddressFactory;
-use BitWasp\Bitcoin\Crypto\Random\Random;
-use BitWasp\Bitcoin\Math\Math;
-use BitWasp\Bitcoin\PaymentProtocol\HttpResponse;
-use BitWasp\Bitcoin\PaymentProtocol\PaymentHandler;
-use BitWasp\Bitcoin\PaymentProtocol\PaymentVerifier;
-use BitWasp\Bitcoin\PaymentProtocol\Protobufs\Output;
-use BitWasp\Bitcoin\PaymentProtocol\Protobufs\Payment;
-use BitWasp\Bitcoin\PaymentProtocol\Protobufs\PaymentACK;
-use BitWasp\Bitcoin\PaymentProtocol\Protobufs\PaymentDetails;
-use BitWasp\Bitcoin\PaymentProtocol\Protobufs\PaymentRequest;
-use BitWasp\Bitcoin\PaymentProtocol\RequestBuilder;
-use BitWasp\Bitcoin\PaymentProtocol\RequestSigner;
-use BitWasp\Bitcoin\Script\Opcodes;
-use BitWasp\Bitcoin\Script\ScriptFactory;
-use BitWasp\Bitcoin\Transaction\Factory\TxBuilder;
-use BitWasp\Bitcoin\Transaction\TransactionOutput;
-use BitWasp\Buffertools\Buffer;
+use BitWasp\Bitcoin\Bitcoin;
+use BitWasp\Bitcoin\Key\Deterministic\HierarchicalKeyFactory;
 
 class DragonPay
 {
@@ -35,10 +18,33 @@ class DragonPay
      */
     protected $explorer;
 
+    private $currency;
+
+    private $network;
+
+    private $xpub;
+
     public function __construct($explorer)
     {
         $this->explorer = $explorer;
+        $this->currency = 'bitcoin';
+        $this->network = Bitcoin::getNetwork();
+        $this->xpub = 'xpub661MyMwAqRbcGtwgccWjqwtZZhPhtTkuUHc9A86jkEsh8XSbYfMS6WDpSc7qGUyRHdvxJPsjaCQJanwJkjxJxofJT6igsnGhsE5f7wv94Yt';
     }
+
+    public function test($orderid)
+    {
+        //$currency = 'bitcoin';
+        //$network = Bitcoin::getNetwork();
+        //$xpub = 'xpub661MyMwAqRbcGtwgccWjqwtZZhPhtTkuUHc9A86jkEsh8XSbYfMS6WDpSc7qGUyRHdvxJPsjaCQJanwJkjxJxofJT6igsnGhsE5f7wv94Yt';
+        $hk = HierarchicalKeyFactory::fromExtended($this->xpub, $this->network);
+        $master = $hk->derivePath("0/0/0/{$orderid}");
+        $address = $master->getPublicKey();
+        $orderAddress = $address->getAddress()->getAddress($this->network);
+
+        return dd($orderAddress);
+    }
+
 
 	/**
 	 * When the payment is received but not yet confirmed this will return true
@@ -62,33 +68,14 @@ class DragonPay
     // Request is saved and a URL given to the client.
 	public function createDetails($amount)
     {
-        $math = new Math();
-        $random = new Random();
-        $time = time();
-
-        $http = new HttpResponse();
-        $merchantRandom = $random->bytes(16);
-        $destination = '1KmftT8rrcQJ6msn81hJPWrgoVBkkud5NH';
-        $paymentUrl = 'http://127.0.0.1:8080/payment?time=' . $time;
-
-        $address = AddressFactory::fromString($destination);
-        $builder = new RequestBuilder();
-        $builder
-            ->setTime($time)
-            ->setExpires((new \DateTime('+1h'))->getTimestamp())
-            ->setMemo('Payment for 1 item')
-            ->setMerchantData($merchantRandom->getBinary())
-            ->setNetwork('main')
-            ->setPaymentUrl($paymentUrl)
-            ->addAddressPayment($address, $amount);
-
-        $encodedUrl = urlencode($paymentUrl);
-        $uri = "bitcoin:{$destination}?r={$encodedUrl}&amount={$amount}";
-        $qr = urlencode($uri);
         echo "<a href='{$uri}'>Pay<img src='https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl={$qr}'></a>";
-        return;
-
+        echo "<br> {$paymentUrl}}";
     }
+
+    public function payment($time)
+    {
+    }
+
 
     /**
      *

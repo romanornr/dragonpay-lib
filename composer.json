@@ -15,7 +15,8 @@
     "minimum-stability": "dev",
     "require": {
         "bitwasp/bitcoin": "v0.0.34.1",
-        "symfony/polyfill-iconv": "^1.6"
+        "symfony/polyfill-iconv": "^1.6",
+        "guzzlehttp/guzzle": "^6.3"
     },
     "autoload":{
     	"psr-4": {

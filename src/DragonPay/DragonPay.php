@@ -1,8 +1,11 @@
 <?php
 
 namespace DragonPay;
+
 use BitWasp\Bitcoin\Bitcoin;
 use BitWasp\Bitcoin\Key\Deterministic\HierarchicalKeyFactory;
+use Illuminate\Support\Facades\App;
+use DragonPay\Helpers;
 
 class DragonPay
 {
@@ -56,9 +59,7 @@ class DragonPay
      */
     public function getBitcoinPrice($price)
     {
-        $btcprice = 15052;
-        $productPriceInBitcoin = $price * $btcprice;
-        return $productPriceInBitcoin;
+        return dd(Helpers::convertFiatIntoBTC('USD', $price));
     }
 
 	/**

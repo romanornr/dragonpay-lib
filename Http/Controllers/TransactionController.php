@@ -11,6 +11,8 @@ class TransactionController extends Controller
     public function test()
     {
         $paymentAddress = DragonPay::createTransactionAddress(1);
+        $price = DragonPay::getBitcoinPrice(1200);
+        return dd($price);
         return view('DragonPay::index', ['paymentAddress' => $paymentAddress]);
     }
 

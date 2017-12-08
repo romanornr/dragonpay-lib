@@ -32,6 +32,12 @@ class DragonPay
         $this->xpub = 'xpub661MyMwAqRbcGtwgccWjqwtZZhPhtTkuUHc9A86jkEsh8XSbYfMS6WDpSc7qGUyRHdvxJPsjaCQJanwJkjxJxofJT6igsnGhsE5f7wv94Yt';
     }
 
+    /**
+     * Create HD address for the order ID
+     *
+     * @param integer $orderid
+     * @return string
+     */
     public function createTransactionAddress($orderid)
     {
         $hk = HierarchicalKeyFactory::fromExtended($this->xpub, $this->network);
@@ -42,6 +48,18 @@ class DragonPay
         return $orderAddress;
     }
 
+    /**
+     * Return the bitcoin price when a dollar price is given.
+     *
+     * @param $price
+     * @return int
+     */
+    public function getBitcoinPrice($price)
+    {
+        $btcprice = 15052;
+        $productPriceInBitcoin = $price * $btcprice;
+        return $productPriceInBitcoin;
+    }
 
 	/**
 	 * When the payment is received but not yet confirmed this will return true
@@ -54,11 +72,6 @@ class DragonPay
 
 		return count($transactions);
 	}
-
-	public function builtAddress()
-    {
-
-    }
 
     // Step 0: Buyer clicks purchase on the website
     // Step 1: Website generates a payment request, $amount (ie 50000) satoshis

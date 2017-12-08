@@ -59,7 +59,19 @@ class DragonPay
      */
     public function getBitcoinPrice($price)
     {
-        return dd(Helpers::convertFiatIntoBTC('USD', $price));
+        Helpers::convertFiatIntoBTC('USD', $price);
+    }
+
+    /**
+     * Create a payment QR code by the address and bitcoin/crypto amount
+     *
+     * @param $address
+     * @param $amount
+     * @return string
+     */
+    public function createQRcode($address, $amount)
+    {
+        return "<a href='{$uri}'>Pay<img src='https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl={$this->currency}:{$address}?amount={$amount}'></a>";
     }
 
 	/**
@@ -73,15 +85,6 @@ class DragonPay
 
 		return count($transactions);
 	}
-
-    // Step 0: Buyer clicks purchase on the website
-    // Step 1: Website generates a payment request, $amount (ie 50000) satoshis
-    // Request is saved and a URL given to the client.
-	public function createDetails($amount)
-    {
-        echo "<a href='{$uri}'>Pay<img src='https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl={$qr}'></a>";
-        echo "<br> {$paymentUrl}}";
-    }
 
     public function payment($time)
     {

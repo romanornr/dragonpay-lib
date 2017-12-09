@@ -14,9 +14,8 @@ class DragonPay
 
     private $xpub;
 
-    public function __construct($explorer)
+    public function __construct()
     {
-        $this->explorer = $explorer;
         $this->currency = 'bitcoin';
         $this->network = Bitcoin::getNetwork();
         $this->xpub = 'xpub661MyMwAqRbcGtwgccWjqwtZZhPhtTkuUHc9A86jkEsh8XSbYfMS6WDpSc7qGUyRHdvxJPsjaCQJanwJkjxJxofJT6igsnGhsE5f7wv94Yt';
@@ -62,7 +61,7 @@ class DragonPay
     }
 }
 
-$dragon = new DragonPay(null);
+$dragon = new DragonPay();
 //$test = $dragon->test();
 //
 //var_dump($dragon->test());

@@ -12,37 +12,28 @@ class BlockExplorer implements Observer {
 
     private $network;
 
-    private $address;
+    private $addresses;
 
     public function __construct()
     {
-        $this->address = array();
+        $this->addresses = array();
     }
 
     public function addAddress(Address $address)
     {
-        array_push($this->address, $address);
+        array_push($this->addresses, $address);
     }
 
-    public function transactionPaid()
+    public function updateTransactionStatus()
     {
-        //(if blablabal){
-         echo "tx paid";
-        //}else{
-        //echo "unpaid
-        //}
-    }
-
-    public function getTransactionStatus()
-    {
-        return [
-            'paid' => $this->transactionPaid()
-            //'confirmed' => $this->transactionConfirmed($address);
-        ];
+        foreach ($this->addresses as $address){
+            $address->update();
+        }
     }
 }
 
 interface Address {
+    public function update();
     public function getTransactionStatus();
 }
 
@@ -54,26 +45,47 @@ class Bitcoin implements Address {
         $this->transactionStatus = $transactionStatus;
     }
 
-    public function getTransactionStatus()
-    {
+    public function update(){
         $this->transactionStatus = $this->getTransactionStatus();
     }
 
-    public function transactionPaid()
+    public function getTransactionStatus()
     {
-        echo 'paid';
+        echo "bitcoin-paid <br>";
     }
+
+}
+
+class Dash implements Address {
+    private $transactionStatus;
+
+    public function __construct($transactionStatus)
+    {
+        $this->transactionStatus = $transactionStatus;
+    }
+
+    public function update(){
+        $this->transactionStatus = $this->getTransactionStatus();
+    }
+
+    public function getTransactionStatus()
+    {
+        echo "dash-paid <br>";
+    }
+
 }
 
 $blockExplorer = new BlockExplorer();
 $addr1 = new Bitcoin('1Hz96kJKF2HLPGY15JWLB5m9qGNxvt8tHJ');
+$addr2 = new Dash('3196kJKF2HLPGY15JWLB5m9qGNx2222');
 
 $blockExplorer->addAddress($addr1);
-$blockExplorer->transactionPaid();
-$blockExplorer->getTransactionStatus();
+$blockExplorer->addAddress($addr2);
 
+$blockExplorer->updateTransactionStatus();
 echo '<br>';
 
-$addr2 = new Bitcoin('3196kJKF2HLPGY15JWLB5m9qGNx2222');
-$blockExplorer->addAddress($addr2);
-$blockExplorer->getTransactionStatus();
+
+//$blockExplorer->addAddress($addr2);
+//$blockExplorer->transactionPaid();
+//$blockExplorer->updateTransactionStatus();

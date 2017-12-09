@@ -32,7 +32,7 @@
                         </div>
                         <div class="payment-info">
                             <div class="card-title payment-title">Halong mining</div>
-                            <div class="payment-price">180.29 EUR</div>
+                            <div class="payment-price">{{$dollarPrice}} Dollar</div>
                             <p class="text-muted ordernumber">Order 626fdb52ee5c913a5e0</p>
                         </div>
                         <div class="payment-section">
@@ -41,10 +41,10 @@
               </a>
                             <div class="media">
                                 <div class="media-left payment-qr">
-                                    <img class="media-object" src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/QR_code_for_mobile_English_Wikipedia.svg/1200px-QR_code_for_mobile_English_Wikipedia.svg.png" width="200px">
+                                    <img class="media-object" src="{{$QRcode}}">
                                 </div>
                                 <div class="media-body payment-details text-muted">
-                                    Send <span class="payment-details-styled">0.02615909</span> bitcoin
+                                    Send <span class="payment-details-styled">{{ $cryptoPrice }}</span> bitcoin
                                     <br> to this bitcoin address
                                     <br>
                                     <span class="payment-details-styled">{{ $paymentAddress }}</span>

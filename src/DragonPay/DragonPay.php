@@ -4,23 +4,10 @@ namespace DragonPay;
 
 use BitWasp\Bitcoin\Bitcoin;
 use BitWasp\Bitcoin\Key\Deterministic\HierarchicalKeyFactory;
-use Illuminate\Support\Facades\App;
 use DragonPay\Helpers;
 
 class DragonPay
 {
-
-	/**
-	 * The vendor can choose a minimum confirmation amount
-	 * before the transaction is considered confirmed,
-	 */
-	protected $minConfirmations = 0;
-
-    /**
-     * The blockexplorer we will be using
-     */
-    protected $explorer;
-
     private $currency;
 
     private $network;
@@ -59,7 +46,7 @@ class DragonPay
      */
     public function getBitcoinPrice($price)
     {
-        Helpers::convertFiatIntoBTC('USD', $price);
+        return Helpers::convertFiatIntoBTC('USD', $price);
     }
 
     /**
@@ -71,56 +58,8 @@ class DragonPay
      */
     public function createQRcode($address, $amount)
     {
-        return "<a href='{$uri}'>Pay<img src='https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl={$this->currency}:{$address}?amount={$amount}'></a>";
+        return "https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl={$this->currency}:{$address}?amount={$amount}";
     }
-
-	/**
-	 * When the payment is received but not yet confirmed this will return true
-     *
-     * @return boolean
-	 */
-	public function transactionPaid($address)
-	{
-		$transactions = $this->explorer->getTransactions($address);
-
-		return count($transactions);
-	}
-
-    public function payment($time)
-    {
-    }
-
-
-    /**
-     *
-     * @return boolean
-     */
-	public function transactionConfirmed($address)
-	{
-
-		// Get the first transaction
-		$transaction = $this->explorer->getTransactions($address)[0];
-
-
-		return $this->minConfirmations >= $transaction->confirmations();
-
-	}
-
-    /**
-     * Return the status of the transaction
-     *
-     * @return array
-     */
-    public function transactionStatus($address)
-    {
-
-        return [
-            'paid' => $this->transactionPaid($address),
-            'confirmed' => $this->transactionConfirmed($address)
-        ];
-
-    }
-
 }
 
 $dragon = new DragonPay(null);

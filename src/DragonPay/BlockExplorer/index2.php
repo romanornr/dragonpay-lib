@@ -78,9 +78,13 @@ class Dash implements Address {
 $blockExplorer = new BlockExplorer();
 $addr1 = new Bitcoin('1Hz96kJKF2HLPGY15JWLB5m9qGNxvt8tHJ');
 $addr2 = new Dash('3196kJKF2HLPGY15JWLB5m9qGNx2222');
+$add3 = New Bitcoin('3234444');
 
 $blockExplorer->addAddress($addr1);
+
 $blockExplorer->addAddress($addr2);
+
+$blockExplorer->addAddress($add3);
 
 $blockExplorer->updateTransactionStatus();
 echo '<br>';

@@ -61,10 +61,3 @@ class DragonPay
     }
 }
 
-$dragon = new DragonPay();
-//$test = $dragon->test();
-//
-//var_dump($dragon->test());
-
-
-

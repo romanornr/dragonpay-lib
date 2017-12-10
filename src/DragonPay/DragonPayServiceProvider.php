@@ -15,6 +15,7 @@ class DragonPayServiceProvider extends ServiceProvider
     {
         $this->loadRoutesFrom(__DIR__.'/routes.php');
         $this->loadViewsFrom(__DIR__.'/../../views', 'DragonPay');
+        $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
 
         $this->publishes([
             __DIR__.'/../../assets' => public_path('vendor/DragonPay'),

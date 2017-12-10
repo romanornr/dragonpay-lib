@@ -15,7 +15,7 @@
 
 <body>
     <nav class="navbar navbar-light bg-light">
-        <a class="payment-text">Waiting for payment <div class="payment-time">14m 51s</div></a>
+        <a class="payment-text">Waiting for payment <div class="payment-time"></div></a>
         <a href="#" class="btn btn-secondary btn-cancel" role="button">Cancel</a>
 
     </nav>
@@ -62,6 +62,29 @@
                   Send <span class="payment-details-styled">0.02615909</span> bitcoin to this address <span class="payment-details-styled">16rCmCmbuWDhPjWTrpQGaU3EPdZF7MTdUk</span>
               </div>
 -->
+                                <script>
+                                    var paymentAddress = {!! json_encode($paymentAddress) !!}
+                                    var orderPrice = {!! json_encode($cryptoPrice) !!}
+                                    var ws = new WebSocket("wss://socket.blockcypher.com/v1/btc/main");
+                                    var count = 0;
+                                    ws.onmessage = function (event) {
+                                        var tx = JSON.parse(event.data);
+                                        var shortHash = tx.hash.substring(0, 6) + "...";
+                                        var total = tx.total / 100000000;
+                                        var addrs = tx.addresses.join(", ");
+                                        $('#browser-websocket').before("<div>Unconfirmed transaction " + shortHash + " totalling " + total + "BTC involving addresses " + addrs + "</div>");
+                                        for(i = 0; i < tx.addresses.length; i++)
+                                            if(tx.addresses[i] == paymentAddress){
+                                                console.log("payment detected");
+                                                console.log(tx.addresses[i]);
+                                                console.log(tx);
+                                                ws.close();
+                                            }
+                                    }
+                                    ws.onopen = function(event) {
+                                        ws.send(JSON.stringify({event: "unconfirmed-tx"}));
+                                    }
+                                </script>
 
                             </div>
 

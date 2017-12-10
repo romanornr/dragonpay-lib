@@ -14,7 +14,6 @@ class CreateTransactionsTable extends Migration
     {
         Schema::create('transactions', function(Blueprint $table){
             $table->increments('id')->unsigned();
-            //$table->integer('order_id')->unsigned()->index();
             $table->string('address', 42);
             $table->integer('block_height')->unsigned();
             $table->string('coin', 15);
@@ -25,8 +24,6 @@ class CreateTransactionsTable extends Migration
             $table->integer('confirmations')->unsigned()->nullable();
             $table->string('confirmed')->nullable();
             $table->boolean('spent')->nullable();
-
-           // $table->foreign('order_id')->references('id')->on('order')->onDelete('cascade');
         });
     }
 

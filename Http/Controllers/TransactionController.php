@@ -12,7 +12,15 @@ class TransactionController extends Controller
     public function test()
     {
         $blockExplorer = new BlockExplorer('1DEP8i3QJCsomS4BSMY2RpU1upv62aGvhD');
-        return dd($blockExplorer->isPaid(4449209));
+
+        //$wallet = BitcoinExplorer::explore('1DEP8i3QJCsomS4BSMY2RpU1upv62aGvhD');
+
+        $blockExplorer->totalReceived() > 449 // ispaid
+
+        if ($blockExplorer->isConfirmed()) {
+
+        }
+
         $paymentAddress = DragonPay::createTransactionAddress(1);
         $dollarPrice = 1200;
         $cryptoPrice = DragonPay::getBitcoinPrice($dollarPrice);
@@ -21,6 +29,12 @@ class TransactionController extends Controller
                                                 'dollarPrice' => $dollarPrice,
                                                 'cryptoPrice' => $cryptoPrice,
                                                 'QRcode' => $QRcode]);
+    }
+
+
+    private function transactionPaid($transactionId)
+    {
+
     }
 
 }

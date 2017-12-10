@@ -49,32 +49,28 @@ class BlockExplorer {
     }
 
     /**
-     * Check if the address received as much as the orderPrice is.
-     * If so, the payment is paid
-     * @param $orderPrice
-     * @return bool
+     * Check how much satoshi the address received
+     * @return integer
      */
-    public function isPaid($orderPrice)
+    public function totalReceived()
     {
-        if($this->totalReceived == $orderPrice && $this->transactionHashEndpoint->unconfirmed_n_tx == 0) return true;
-        return false;
+        return $this->totalReceived;
     }
 
     /**
-     * If the unconfirmed number of transaction is 0
-     * it means all transactions are paid.
+     * Check if all transactions are confirmed
      * @return bool
      */
     public function isConfirmed()
     {
-        if($this->transactionHashEndpoint->unconfirmed_n_tx ==0) return true;
+        if($this->transactionHashEndpoint->unconfirmed_n_tx == 0) return true;
     }
 
 //    public function updateTransactionStatus()
 //    {
 //    }
 
-    public function auditTransaction($orderPrice)
+    public function auditTransaction()
     {
         //foreach save all paid tansactions in database.
     }

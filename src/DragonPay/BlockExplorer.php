@@ -6,8 +6,8 @@ use GuzzleHttp\Psr7;
 use GuzzleHttp\Exception\RequestException;
 use Mockery\Exception;
 
-class BlockExplorer {
-
+abstract class BlockExplorer
+{
     /**
      * @var int
      */
@@ -16,34 +16,45 @@ class BlockExplorer {
     /**
      * @var
      */
-    private $network;
+    protected $symbol;
 
     /**
      * @var string
      */
-    private $currency;
+    protected $currency;
 
     /**
      * @var float
      */
-    private $totalReceived;
+    protected $totalReceived;
 
     /**
      * @var mixed
      */
-    private $transactionHashEndpoint;
+    protected $transactionHashEndpoint;
 
-    /**
-     * BlockExplorer constructor.
-     * @param $address
-     */
+    public function totalReceived()
+    {
+        return $this->totalReceived;
+    }
+
+    public function isConfirmed()
+    {
+        if($this->transactionHashEndpoint->unconfirmed_n_tx == 0) return true;
+    }
+
+}
+
+class BitcoinExplorer extends BlockExplorer {
+
     public function __construct($address)
     {
         $this->currency = 'bitcoin';
+        $this->symbol = 'btc';
         $client = new \GuzzleHttp\Client();
 
         try {
-            $res = $client->request('GET', "https://api.blockcypher.com/v1/btc/main/addrs/{$address}");
+            $res = $client->request('GET', "https://api.blockcypher.com/v1/{$this->symbol}/main/addrs/{$address}");
             $res = GuzzleHttp\json_decode($res->getBody());
 
             $this->transactionHashEndpoint = $res;
@@ -53,27 +64,35 @@ class BlockExplorer {
         }
     }
 
-    /**
-     * Check how much satoshi the address received
-     * @return integer
-     */
-    public function totalReceived()
+    public function auditTransaction()
     {
-        return $this->totalReceived;
+        //foreach save all paid tansactions in database.
     }
+}
+
+
+class DashExplorer extends BlockExplorer {
 
     /**
-     * Check if all transactions are confirmed
-     * @return bool
+     * BlockExplorer constructor.
+     * @param $address
      */
-    public function isConfirmed()
+    public function __construct($address)
     {
-        if($this->transactionHashEndpoint->unconfirmed_n_tx == 0) return true;
-    }
+        $this->currency = 'dash';
+        $this->symbol = 'dash';
+        $client = new \GuzzleHttp\Client();
 
-//    public function updateTransactionStatus()
-//    {
-//    }
+        try {
+            $res = $client->request('GET', "https://api.blockcypher.com/v1/{$this->symbol}/main/addrs/{$address}");
+            $res = GuzzleHttp\json_decode($res->getBody());
+
+            $this->transactionHashEndpoint = $res;
+            $this->totalReceived = $res->total_received;
+        }catch (RequestException $e){
+            throw new Exception('API connection problems');
+        }
+    }
 
     public function auditTransaction()
     {

@@ -14,16 +14,17 @@ class BlockExplorer {
 
     private $currency;
 
-    private $addresses;
+    private $address;
 
     private $totalReceived;
 
-    public function __construct()
+    public function __construct($address)
     {
         $this->currency = 'bitcoin';
+        $this->address = $address;
 
         $client = new \GuzzleHttp\Client();
-        $res = $client->request('GET', 'https://api.blockcypher.com/v1/btc/main/addrs/1DEP8i3QJCsomS4BSMY2RpU1upv62aGvhD');
+        $res = $client->request('GET', "https://api.blockcypher.com/v1/btc/main/addrs/{$this->address}");
         $res = GuzzleHttp\json_decode($res->getBody());
         echo $res->total_received;
     }

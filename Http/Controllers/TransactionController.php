@@ -6,20 +6,27 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use DragonPay;
 use DragonPay\BlockExplorer as BlockExplorer;
+use Mockery\Exception;
 
 class TransactionController extends Controller
 {
     public function test()
     {
-        $blockExplorer = new BlockExplorer('1DEP8i3QJCsomS4BSMY2RpU1upv62aGvhD');
 
-        //$wallet = BitcoinExplorer::explore('1DEP8i3QJCsomS4BSMY2RpU1upv62aGvhD');
+        try {
+            $blockExplorer = new BlockExplorer('1DEP8i3QJCsomS4BSMY2RpU1upv62aGvh');
+           // return dd($blockExplorer->totalReceived());
+        } catch (Exception $e) {
 
-        $blockExplorer->totalReceived() > 449 // ispaid
-
-        if ($blockExplorer->isConfirmed()) {
-
+            return 'error'. $e;
         }
+
+
+       // $blockExplorer->totalReceived() > 449 // ispaid
+
+        //if ($blockExplorer->isConfirmed()) {
+
+        //}
 
         $paymentAddress = DragonPay::createTransactionAddress(1);
         $dollarPrice = 1200;

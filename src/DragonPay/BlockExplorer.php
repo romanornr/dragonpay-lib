@@ -41,11 +41,16 @@ class BlockExplorer {
     {
         $this->currency = 'bitcoin';
         $client = new \GuzzleHttp\Client();
-        $res = $client->request('GET', "https://api.blockcypher.com/v1/btc/main/addrs/{$address}");
-        $res = GuzzleHttp\json_decode($res->getBody());
 
-        $this->transactionHashEndpoint = $res;
-        $this->totalReceived = $res->total_received;
+        try {
+            $res = $client->request('GET', "https://api.blockcypher.com/v1/btc/main/addrs/{$address}");
+            $res = GuzzleHttp\json_decode($res->getBody());
+
+            $this->transactionHashEndpoint = $res;
+            $this->totalReceived = $res->total_received;
+        }catch (RequestException $e){
+            throw new Exception('API connection problems');
+        }
     }
 
     /**

@@ -71,7 +71,7 @@ abstract class Explorer
     protected $currency;
 
     /**
-     * @var float
+     * @var int
      */
     protected $totalReceived;
 

@@ -159,7 +159,7 @@ class DashExplorer extends Explorer {
     }
     public function totalReceived(string $address)
     {
-        return parrent::totalReceived($address);
+        return parent::totalReceived($address);
     }
 
     public function auditTransaction()

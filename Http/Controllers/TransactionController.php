@@ -32,7 +32,7 @@ class TransactionController extends Controller
         //return dd(\DragonPay\ExplorerManager::BITCOIN);
         $explorer = (new ExplorerManager)->getExplorer(ExplorerManager::BITCOIN);
 
-dd($explorer->totalReceived('1J7FCFaafPRxqu4X9VsaiMZr1XMemx69GR'));
+//dd($explorer->totalReceived('1J7FCFaafPRxqu4X9VsaiMZr1XMemx69GR'));
 
         //return dd($explorer->getExplorer(ExplorerManager::BITCOIN)->totalReceived('1DEP8i3QJCsomS4BSMY2RpU1upv62aGvh'));
 

@@ -48,6 +48,11 @@ class DragonPay
     public function createTransactionAddress($orderid)
     {
 
+        /**
+         * @param HierarchicalKey $key
+         * @param $purpose
+         * @return \BitWasp\Bitcoin\Address\AddressInterface
+         */
         function toAddress(HierarchicalKey $key, $purpose) {
             switch ($purpose) {
                 case 44:
@@ -63,71 +68,13 @@ class DragonPay
             return AddressFactory::fromOutputScript($script);
         }
 
-        $mnemonic = "letter business goat metal grain depart case resource universe blood main destroy empty invest fiscal hint enhance fragile guess return frame shaft number impact";
-        $bip39 = new Bip39SeedGenerator();
-        $seed = $bip39->getSeed($mnemonic);
         $purpose = 49;
-        $root = HierarchicalKeyFactory::fromEntropy($seed);
-        echo "Root key (m): " . $root->toExtendedKey() . PHP_EOL;
-        echo "Root key (M): " . $root->toExtendedPublicKey() . PHP_EOL;
-        echo "\n\n -------------- \n\n";
-        echo "Derive (m -> m/{$purpose}'/0'/0'): \n";
-        $purposePriv = $root->derivePath("{$purpose}'/0'/0'");
-        echo "m/{$purpose}'/0'/0': ".$purposePriv->toExtendedPrivateKey().PHP_EOL;
-        echo "M/{$purpose}'/0'/0': ".$purposePriv->toExtendedPublicKey().PHP_EOL;
-        echo "Derive (M -> m/{$purpose}'/0'/0'): .... should fail\n";
-        try {
-            $rootPub = $root->toPublic()->derivePath("{$purpose}'/0'/0'");
-        } catch (\Exception $e) {
-            echo "caught exception, yes this is impossible: " . $e->getMessage().PHP_EOL;
-        }
-        $purposePub = $purposePriv->toExtendedPublicKey();
-        echo "\n\n -------------- \n\n";
-        echo "initialize from xpub (M/{$purpose}'/0'/0'): \n";
+        $purposePub = 'xpub6DBfFoZHK5ZCzuoViVTzmRTf91DEVvYoifJQToHhHAwS2pmyeQCfQ5pqCg65WYBB2jnyDtoPRdpLVgwH5UpFswFX1qNtD4ccpZJXB9fqkQA';
         $xpub = HierarchicalKeyFactory::fromExtended($purposePub);
-        echo "0/0: ".toAddress($xpub->derivePath("0/0"), $purpose)->getAddress().PHP_EOL;
-        echo "0/1: ".toAddress($xpub->derivePath("0/1"), $purpose)->getAddress().PHP_EOL;
 
-return;
-
-       // $hk = HierarchicalKeyFactory::fromExtended($this->xpub, $this->network);
-//        $priv = PrivateKeyFactory::fromWif('L1U6RC3rXfsoAx3dxsU1UcBaBSRrLWjEwUGbZPxWX9dBukN345R1');
-//        $publicKey = $priv->getPublicKey();
-//        $pubKeyHash = $publicKey->getPubKeyHash();
-//        $p2pkh = new PayToPubKeyHashAddress($pubKeyHash);
-
-//        //Normal address to Segwit
-//        echo " * p2pkh address: {$p2pkh->getAddress()}\n"; // normal address 1FCqCvfj5YYZ1qwM2a1ozyJmUnG1BdpS5r
-//        $p2wpkhWP = WitnessProgram::v0($publicKey->getPubKeyHash());
-//        $p2wpkh = new SegwitAddress($p2wpkhWP);
-//        return dd($p2wpkh->getAddress());
-//        //
-
-       //$master = $hk->derivePath("0/{$orderid}");
-        //$master = $hk->derivePath("m/49/0/0/{$orderid}");
-      // return dd($master = $hk->derivePath("m/49'/0'/3'");
-//       $address = $master->getPublicKey();
-//
-//        $orderAddress = $address->getAddress()->getAddress($this->network);
-//        return dd($orderAddress);
-//
-//        //
-//
-//        $script = ScriptFactory::scriptPubKey()->p2pkh($address->getPubKeyHash());
-//        $p2pkh = AddressFactory::fromOutputScript($script);
-//        //echo " * p2pkh address: {$p2pkh->getAddress()}\n";
-//        $redeemScript = new P2shScript($p2pkh->getScriptPubKey());
-//        $p2shAddr = $redeemScript->getAddress();
-//        echo " * p2sh: {$p2shAddr->getAddress()}\n";
-//        return;
-//
-//
-//        $p2wpkhWP = WitnessProgram::v0($address->getPubKeyHash());
-//        $SegwitAddr = New SegwitAddress($p2wpkhWP);
-//        return dd(($SegwitAddr)->getAddress());
-//        //
-//
-//        return $orderAddress;
+        $orderAddress = toAddress($xpub->derivePath("0/{$orderid}"), $purpose)->getAddress(); //orderid as childkey
+        return dd($orderAddress);
+       //echo "0/1: ".toAddress($xpub->derivePath("0/1"), $purpose)->getAddress().PHP_EOL;
     }
 
     /**

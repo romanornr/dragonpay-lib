@@ -12,12 +12,12 @@ class TransactionController extends Controller
 {
     public function test()
     {
-        $explorer = (new ExplorerManager)->getExplorer(ExplorerManager::BITCOIN)->auditTransaction('1DEP8i3QJCsomS4BSMY2RpU1upv62aGvhD');
-        return dd($explorer);
+        //$explorer = (new ExplorerManager)->getExplorer(ExplorerManager::BITCOIN)->auditTransaction('1DEP8i3QJCsomS4BSMY2RpU1upv62aGvhD');
+        //return dd($explorer);
         //dd($explorer->totalReceived('1J7FCFaafPRxqu4X9VsaiMZr1XMemx69GR'));
         //return dd($explorer->getExplorer(ExplorerManager::BITCOIN)->auditTransaction('34qkc2iac6RsyxZVfyE2S5U5WcRsbg2dpK'));
 
-        return;
+        //return;
 
         $paymentAddress = DragonPay::createTransactionAddress(1);
         $dollarPrice = 2;

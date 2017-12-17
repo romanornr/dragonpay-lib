@@ -25,7 +25,7 @@ class DragonPay
     {
         $this->currency = 'bitcoin';
         $this->network = Bitcoin::getNetwork();
-        $this->xpub = 'xpub6CbK8MSWq77LAbHCUnUqDyZaMN88y4JGnYWx7hepu5146rdisd59BV4yD68PUxx3Rxp2VgYfdygqdgaoux7jfbMsY9qEg8NafLm6NxTNftU'; //ledger
+        $this->xpub = 'xpub6DBfFoZHK5ZCzuoViVTzmRTf91DEVvYoifJQToHhHAwS2pmyeQCfQ5pqCg65WYBB2jnyDtoPRdpLVgwH5UpFswFX1qNtD4ccpZJXB9fqkQA'; //ledger
     }
 
     /**
@@ -58,7 +58,7 @@ class DragonPay
         }
 
         $purpose = 49;
-        $purposePub = 'xpub6DBfFoZHK5ZCzuoViVTzmRTf91DEVvYoifJQToHhHAwS2pmyeQCfQ5pqCg65WYBB2jnyDtoPRdpLVgwH5UpFswFX1qNtD4ccpZJXB9fqkQA';
+        $purposePub = $this->xpub;
         $xpub = HierarchicalKeyFactory::fromExtended($purposePub);
 
         $orderAddress = toAddress($xpub->derivePath("0/{$orderid}"), $purpose)->getAddress(); //orderid as childkey

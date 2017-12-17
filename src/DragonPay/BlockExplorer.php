@@ -5,28 +5,29 @@ use GuzzleHttp;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use Mockery\Exception;
+use DragonPay\Models\Transaction;
 
-class Transaction
-{
-    protected $explorer;
-
-    public function __construct()
-    {
-        $this->currency = 'bitcoin';
-        $this->symbol = 'btc';
-        $this->client = new Client();
-
-    }
-
-    /**
-     * @return mixed|\Psr\Http\Message\ResponseInterface
-     */
-    public function getTotalReceived()
-    {
-        $data = $this->client->request('GET', "https://api.blockcypher.com/v1/{$this->coin}/main/addrs/{$address}");
-        return $data;
-    }
-}
+//class Transaction
+//{
+//    protected $explorer;
+//
+//    public function __construct()
+//    {
+//        $this->currency = 'bitcoin';
+//        $this->symbol = 'btc';
+//        $this->client = new Client();
+//
+//    }
+//
+//    /**
+//     * @return mixed|\Psr\Http\Message\ResponseInterface
+//     */
+//    public function getTotalReceived()
+//    {
+//        $data = $this->client->request('GET', "https://api.blockcypher.com/v1/{$this->coin}/main/addrs/{$address}");
+//        return $data;
+//    }
+//}
 
 class ExplorerManager
 {
@@ -106,6 +107,42 @@ abstract class Explorer
         }
     }
 
+    /**
+     * Insert all transactions from an address into the transaction table
+     * @param string $address
+     * @return string|void
+     */
+    protected function auditTransaction(string $address)
+    {
+        try{
+        $res = $this->client->request('GET', "https://api.blockcypher.com/v1/{$this->symbol}/main/addrs/{$address}");
+        $res = GuzzleHttp\json_decode($res->getBody());
+        }catch (RequestException $e){
+            throw new Exception('API connection problems');
+        }
+
+        if($res->total_received == 0) return;  // Do not audit if ever received balance is 0
+
+        foreach ($res->txrefs as $txref)
+        {
+            $tx = new Transaction;
+            $txHashCheck = $tx::where('txhash', $txref->tx_hash)->count();
+            if($txHashCheck >= 1 || $txref->confirmations == 0 || $txref->double_spend == true) continue;
+
+            $tx->address = $res->address;
+            $tx->block_height = $txref->block_height;
+            $tx->coin = $this->symbol;
+            $tx->txhash = $txref->tx_hash;
+            $tx->tx_input_n = $txref->tx_input_n;
+            $tx->tx_output_n = $txref->tx_output_n;
+            $tx->value = $txref->value;
+            $tx->confirmations = $txref->confirmations;
+            $tx->confirmed = $txref->confirmed;
+            $tx->spent = $txref->spent;
+            $tx->save();
+        }
+        return 'done!';
+    }
 }
 
 class BitcoinExplorer extends Explorer {
@@ -137,9 +174,10 @@ class BitcoinExplorer extends Explorer {
         return parent::totalReceived($address);
     }
 
-    public function auditTransaction()
+    public function auditTransaction(string $address)
     {
         //foreach save all paid tansactions in database.
+        return parent::auditTransaction($address);
     }
 }
 
@@ -153,7 +191,6 @@ class DashExplorer extends Explorer {
     public function __construct(Client $client)
     {
         $this->client = $client;
-
         $this->currency = 'bitcoin';
         $this->symbol = 'btc';
     }
@@ -162,8 +199,9 @@ class DashExplorer extends Explorer {
         return parent::totalReceived($address);
     }
 
-    public function auditTransaction()
+    public function auditTransaction(string $address)
     {
         //foreach save all paid tansactions in database.
+        return parent::auditTransaction($address);
     }
 }

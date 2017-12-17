@@ -13,7 +13,6 @@ class CreateTransactionTable extends Migration
     public function up()
     {
         Schema::create('transactions', function(Blueprint $table){
-            $table->increments('id')->unsigned();
             $table->string('address', 42);
             $table->integer('block_height')->unsigned();
             $table->string('coin', 15);

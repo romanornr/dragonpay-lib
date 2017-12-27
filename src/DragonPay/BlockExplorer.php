@@ -87,8 +87,16 @@ abstract class Explorer
      */
     public function isConfirmed()
     {
-        if($this->transactionHashEndpoint->unconfirmed_n_tx == 0) return true;
-        return false;
+        //if($this->transactionHashEndpoint->unconfirmed_n_tx == 0) return true;
+        //return false;
+        try {
+            $res = $this->client->request('GET', "https://insight.bitpay.com/api/addr/1DEP8i3QJCsomS4BSMY2RpU1upv62aGvhD/unconfirmedBalance");
+            $res = GuzzleHttp\json_decode($res->getBody());
+            if($res === 0) return true;
+            return false;
+        }catch (RequestException $e){
+            throw new Exception('API connection problem for getting unconfirmed balance');
+        }
     }
 
     /**
@@ -96,12 +104,11 @@ abstract class Explorer
      * @param string $address
      * @return mixed
      */
-    protected function totalReceived(string $address)
+    protected function getAddressTotalReceived(string $address)
     {
         try {
-            $res = $this->client->request('GET', "https://api.blockcypher.com/v1/{$this->symbol}/main/addrs/{$address}");
-            $res = GuzzleHttp\json_decode($res->getBody());
-            return $res->total_received;
+            $res = $this->client->request('GET', "https://insight.bitpay.com/api/addr/{$address}/totalReceived");
+            return GuzzleHttp\json_decode($res->getBody());
         }catch (RequestException $e){
             throw new Exception('API connection problems');
         }
@@ -169,9 +176,9 @@ class BitcoinExplorer extends Explorer {
      * @param string $address
      * @return float
      */
-    public function totalReceived(string $address)
+    public function getAddressTotalReceived(string $address)
     {
-        return parent::totalReceived($address);
+        return parent::getAddressTotalReceived($address);
     }
 
     public function auditTransaction(string $address)

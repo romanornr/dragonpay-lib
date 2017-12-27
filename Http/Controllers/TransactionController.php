@@ -16,7 +16,7 @@ class TransactionController extends Controller
     {
         //$explorer = (new ExplorerManager)->getExplorer(ExplorerManager::BITCOIN)->getAddressTotalReceived('1DEP8i3QJCsomS4BSMY2RpU1upv62aGvhD');
         $test = new LitecoinInsightAPI();
-        return dd($test->getAddressTotalReceived('LSZ4GJNnexpFb1oEH1CZB2HWqNsaLXiqS8 '));
+        return dd($test->getAddressTotalReceived('LSZ4GJNnexpFb1oEH1CZB2HWqNsaLXiqS8'));
 
         //return dd($explorer);
         //dd($explorer->totalReceived('1J7FCFaafPRxqu4X9VsaiMZr1XMemx69GR'));

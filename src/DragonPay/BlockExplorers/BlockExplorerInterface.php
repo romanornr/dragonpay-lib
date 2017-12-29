@@ -9,7 +9,7 @@
 namespace DragonPay\BlockExplorers;
 use GuzzleHttp\Client;
 
-interface BlockExplorer
+interface BlockExplorerInterface
 {
     public function getAddressHistory();
     public function getAddressTotalReceived(string $address): int;

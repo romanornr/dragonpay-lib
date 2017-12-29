@@ -7,7 +7,7 @@ use GuzzleHttp\Exception\RequestException;
 use Mockery\Exception;
 use DragonPay\Models\Transaction;
 
-abstract class InsightAPI implements BlockExplorer {
+abstract class InsightAPI implements BlockExplorerInterface {
 
     protected $network;
 

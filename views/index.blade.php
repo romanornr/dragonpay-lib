@@ -62,6 +62,22 @@
                   Send <span class="payment-details-styled">0.02615909</span> bitcoin to this address <span class="payment-details-styled">16rCmCmbuWDhPjWTrpQGaU3EPdZF7MTdUk</span>
               </div>
 -->
+                                <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+                                <script>
+                            socket = io.connect("https://blockexplorer.com/");
+                                    socket.on('connect', function() {
+                                        socket.nsp = "/";
+                                        socket.emit('subscribe', 'inv');
+                                        socket.on('tx', function(tx) {
+                                           console.log(tx.vout);
+                                            for(i = 0; i < tx.vout.length; i++){
+                                                console.log(tx.vout[i]);
+                                            }
+                                        });
+                                    });
+                                </script>
+
+
                                 <script>
                                     var paymentAddress = {!! json_encode($paymentAddress) !!}
                                     var orderPrice = {!! json_encode($cryptoPrice) !!}

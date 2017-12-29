@@ -8,15 +8,15 @@ use DragonPay;
 //use DragonPay\Explorer as BlockExplorer;
 use Mockery\Exception;
 use DragonPay\BlockExplorers\Litecoin\LitecoinInsightAPI as LitecoinInsightAPI;
+use DragonPay\BlockExplorers\Bitcoin\BitcoinInsightAPI;
 use DragonPay\BlockExplorers\InsightAPI;
 
 class TransactionController extends Controller
 {
     public function test()
     {
-        //$explorer = (new ExplorerManager)->getExplorer(ExplorerManager::BITCOIN)->getAddressTotalReceived('1DEP8i3QJCsomS4BSMY2RpU1upv62aGvhD');
-        $test = new LitecoinInsightAPI();
-        return dd($test->getAddressTotalReceived('LSZ4GJNnexpFb1oEH1CZB2HWqNsaLXiqS8'));
+        $test = new BitcoinInsightAPI();
+        return dd($test->getAddressTotalReceived('17gVZssumiJqYMCHozHKXGyaAvyu6NCX6V'));
 
         //return dd($explorer);
         //dd($explorer->totalReceived('1J7FCFaafPRxqu4X9VsaiMZr1XMemx69GR'));

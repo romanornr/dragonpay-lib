@@ -7,11 +7,14 @@ use GuzzleHttp\Exception\RequestException;
 use Mockery\Exception;
 use DragonPay\Models\Transaction;
 
-abstract class InsightAPI implements BlockExplorerInterface {
+abstract class InsightAPI implements BlockExplorerInterface
+{
 
     protected $network;
 
     protected $api;
+
+    protected $paid = false;
 
     public function getAddressHistory()
     {
@@ -20,7 +23,7 @@ abstract class InsightAPI implements BlockExplorerInterface {
 
     protected function setApi(string $url)
     {
-       $this->api = $url;
+        $this->api = $url;
     }
 
     public function getAddressTotalReceived(string $address): int
@@ -29,8 +32,17 @@ abstract class InsightAPI implements BlockExplorerInterface {
         try {
             $res = $client->request('GET', "{$this->api}/addr/{$address}/totalReceived");
             return GuzzleHttp\json_decode($res->getBody());
-        }catch (RequestException $e){
+        } catch (RequestException $e) {
             throw new Exception('API connection problems');
         }
+    }
+
+    public function isPaid(string $address, int $satoshi): bool
+    {
+        $totalReceived = $this->getAddressTotalReceived($address);
+        if ($totalReceived >= $satoshi) {
+            $this->paid = true;
+        }
+        return $this->paid;
     }
 }

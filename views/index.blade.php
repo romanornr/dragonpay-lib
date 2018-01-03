@@ -8,9 +8,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-   <!-- <link rel="stylesheet" href="vendor/DragonPay/css/style.css">-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" href="vendor/DragonPay/css/style.css">-->
     <link rel="stylesheet" href="{!! asset('vendor/DragonPay/css/style.css') !!}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js"></script>
 </head>
 
 <body>
@@ -37,20 +38,35 @@
                         </div>
                         <div class="payment-section">
                             <a class="payment-info-text">
-              Do not pay this invoice from Coinbase wallet or a bitcoin exchange account. Exchanges and especially Coinbase do not broadcast the bitcoin payment in time, thus resulting in failure. Use the following bitcoin wallets instead: Trezor, Ledger, samouraiwallet, Copay, Electrum, Greenadress. 
+              Do not pay this invoice from Coinbase wallet or a bitcoin exchange account. Exchanges and especially Coinbase do not broadcast the bitcoin payment in time, thus resulting in failure. Use the following bitcoin wallets instead: Trezor, Ledger, samouraiwallet, Copay, Electrum, Greenadress.
               </a>
                             <div class="media">
                                 <div class="media-left payment-qr">
                                     <img class="media-object" src="{{$QRcode}}">
                                 </div>
-                                <div class="media-body payment-details text-muted">
-                                    Send <span class="payment-details-styled">{{ $cryptoPrice }}</span> bitcoin
-                                    <br> to this bitcoin address
-                                    <br>
-                                    <span class="payment-details-styled">{{ $paymentAddress }}</span>
-                                    <br>
-                                    <a href="#" class="btn btn-secondary" role="button">Need Help</a>
-                                    <a href="#" class="btn btn-primary" role="button">Pay from wallet</a>
+                                <div class="">
+
+                                    <script>new Clipboard('.btn');
+                                        clipboard.on('success', function(e) {
+                                            console.info('Action:', e.action);
+                                            event.trigger.textContent = 'Copied';
+                                            console.info('Text:', e.text);
+                                            console.info('Trigger:', e.trigger);
+
+                                            e.clearSelection();
+                                        });
+                                    </script>
+
+                                    <input value="{{$cryptoPrice}}" readonly/>
+                                    <button class="btn" data-clipboard-text="{{ $cryptoPrice }}">
+                                        copy
+                                    </button>
+
+                                    <input value="{{ $paymentAddress }}" readonly/>
+                                    <button class="btn" data-clipboard-text="{{ $paymentAddress }}">
+                                       copy
+                                    </button>
+
 
                                 </div>
 

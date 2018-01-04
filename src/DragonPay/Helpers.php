@@ -14,7 +14,7 @@ class Helpers
      * @param $amount
      * @return mixed
      */
-    public static function convertFiatIntoBTC($currency = 'USD', $amount)
+    public static function convertFiatIntoBTC($currency = 'USD', $amount): float
     {
         $client = new GuzzleHttp\Client();
 
@@ -27,5 +27,10 @@ class Helpers
             throw new Exception('Can not get the bitcoin price. Please come back later');
            if($e->hasResponse()) echo Psr7\str($e->getResponse());
         }
+    }
+
+    public static function convertIntoSatoshi(float $amount): int
+    {
+        return $amount * 100000000;
     }
 }

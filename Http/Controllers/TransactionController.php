@@ -10,13 +10,14 @@ use Mockery\Exception;
 use DragonPay\BlockExplorers\Litecoin\LitecoinInsightAPI as LitecoinInsightAPI;
 use DragonPay\BlockExplorers\Bitcoin\BitcoinInsightAPI;
 use DragonPay\BlockExplorers\InsightAPI;
+use App\Models\Order;
 
 class TransactionController extends Controller
 {
     public function test()
     {
-        $test = new BitcoinInsightAPI();
-        return dd($test->getAddressTotalReceived('17gVZssumiJqYMCHozHKXGyaAvyu6NCX6V'));
+        //$test = new BitcoinInsightAPI();
+       // return dd($test->getAddressTotalReceived('17gVZssumiJqYMCHozHKXGyaAvyu6NCX6V'));
 
         //return dd($explorer);
         //dd($explorer->totalReceived('1J7FCFaafPRxqu4X9VsaiMZr1XMemx69GR'));
@@ -28,6 +29,7 @@ class TransactionController extends Controller
         $dollarPrice = 2;
         $cryptoPrice = DragonPay::getBitcoinPrice($dollarPrice);
         $QRcode = DragonPay::createQRcode($paymentAddress, $cryptoPrice);
+
         return view('DragonPay::index', ['paymentAddress' => $paymentAddress,
                                                 'dollarPrice' => $dollarPrice,
                                                 'cryptoPrice' => $cryptoPrice,
@@ -35,9 +37,22 @@ class TransactionController extends Controller
     }
 
 
-    private function transactionPaid($transactionId)
+    public function transactionPaid()
     {
+        $network = 'Bitcoin';
+        $blockExplorer = new BitcoinInsightAPI();
 
+        $orders = Order::where('paid', 0)
+                ->where('network', $network)
+                ->get();
+
+        foreach($orders as $order)
+        {
+            if($blockExplorer->isPaid($order->paymentAddress, $order->satoshi)){
+                $order->paid = 1;
+                $order->save();
+            };
+        }
     }
 
 }

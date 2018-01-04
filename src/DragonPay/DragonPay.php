@@ -34,7 +34,7 @@ class DragonPay
      * @param integer $orderid
      * @return string
      */
-    public function createTransactionAddress($orderid)
+    public function createTransactionAddress(int $orderid)
     {
 
         /**
@@ -72,9 +72,14 @@ class DragonPay
      * @param $price
      * @return int
      */
-    public function getBitcoinPrice($price)
+    public function getBitcoinPrice(float $price): float
     {
         return Helpers::convertFiatIntoBTC('USD', $price);
+    }
+
+    public function getSatoshi(float $price): int
+    {
+        return Helpers::convertIntoSatoshi($price);
     }
 
     /**
@@ -84,7 +89,7 @@ class DragonPay
      * @param $amount
      * @return string
      */
-    public function createQRcode($address, $amount)
+    public function createQRcode(string $address, float $amount): string
     {
         return "https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl={$this->currency}:{$address}?amount={$amount}";
     }

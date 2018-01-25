@@ -14,12 +14,12 @@ class InvoiceTest extends TestCase
     {
         $this->invoice = new \DragonPay\Invoice();
     }
-
+    
     public function testGetPrice()
     {
 
         $this->assertTrue(1 > -1);
-        //$this->assertNotNull($this->invoice);
-        //$this->asserNull($this->invoice->getPrice());
+        $this->assertNotNull($this->invoice);
+        $this->assertNull($this->invoice->getPrice());
     }
 }

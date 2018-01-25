@@ -15,14 +15,18 @@ class Invoice implements InvoiceInterface
     protected $orderId;
 
     /**
+     * @var ItemInterface
+     */
+    protected $item;
+
+    /**
      * get price in BTC
      *
      * @return float
      */
     public function getPrice()
     {
-       // return $this->getItem()->getPrice();
-        return 1;
+        return $this->getItem()->getPrice();
     }
 
     public function getCryptoCurrency()
@@ -35,7 +39,11 @@ class Invoice implements InvoiceInterface
 
     public function getItem()
     {
-        // TODO: Implement getItem() method.
+        if (null == $this->item) {
+            $this->item = new \DragonPay\Item();
+        }
+
+        return $this->item;
     }
 
     public function getTransactionSpeed()

@@ -18,6 +18,9 @@
         "symfony/polyfill-iconv": "^1.6",
         "guzzlehttp/guzzle": "^6.3"
     },
+    "require-dev": {
+        "phpunit/phpunit": "^6.5.5"
+    },
     "autoload":{
     	"psr-4": {
         "DragonPay\\": "src/"

@@ -1,6 +1,6 @@
 <?php
 
-namespace DragonPay;
+namespace Dragonpay;
 
 class Item implements IntemInterface
 {
@@ -19,93 +19,112 @@ class Item implements IntemInterface
     /**
      * @var string
      */
-    protected $price;
+    protected $transactionSpeed = self::TRANSACTION_SPEED_MEDIUM;
+
+    /**
+     * @var string
+     */
+    protected $notificationEmail;
+
+    /**
+     * @var string
+     */
+    protected $notificationUrl;
+
+    /**
+     * @var string
+     */
+    protected $redirectUrl;
+
+    /*
+     * @var string
+     */
+    protected $posData;
+
+    /**
+     * @var string
+     */
+    protected $status;
+
+    /**
+     * @var bool
+     */
+    protected $fullNotifications = true;
+
+    /**
+     * @var bool
+     */
+    protected $extendedNotificatopns = false;
+
+    /**
+     * @var integer
+     */
+    protected $id;
+
+    /**
+     * @var string
+     */
+    protected $url;
 
     /**
      * @var float
      */
-    protected $quantity;
+    protected $btcPrice;
 
     /**
-     * @var boolean
+     * @var \DateTime
      */
-    protected $physical;
-
-    public function __construct()
-    {
-        $this->physical = false;
-    }
-
-    public function getCode(): string
-    {
-        return $this->code;
-    }
+    protected $invoiceTime;
 
     /**
-     * @param $code
-     * @return $this
+     * @var DateTime
      */
-    public function setCode($code): string
-    {
-        $this->code = $code;
-        return $this;
-    }
+    protected $currentTime;
 
     /**
-     * @param $description
-     * @return ItemInterface
+     * @var BuyerInterface
      */
-    public function setDescription($description): string
-    {
-        $this->description = $description;
-        return $this;
-    }
+    protected $buyer;
 
-    public function getPrice(): float
+    protected $exceptionStatus;
+
+    /**
+     * @var
+     */
+    protected $btcPaid;
+
+    /**
+     * @var
+     */
+    protected $rate;
+
+    /**
+     * @var
+     */
+    protected $token;
+
+    /**
+     * @var array
+     */
+    protected $refundAddresses;
+
+    /**
+     * @inheritdoc
+     */
+    public function getPrice()
     {
-        return $this->price;
+        return $this->getItem()->getPrice();
     }
 
     /**
-     * @param $price
-     * @return ItemInterface
+     * @param float $price
+     * @return IntervoiceInterface
      */
     public function setPrice($price): float
     {
-        $this->price = $price;
-        return $this;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getQuantity()
-    {
-        return $this->quantity;
-    }
-
-    public function setQuantity($quantity): integer
-    {
-        $this->quantity = $quantity;
-        return $this;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function isPhysical()
-    {
-        return $this->physical;
-    }
-
-    /**
-     * @param boolean $physical
-     *
-     * @return ItemInterface
-     */
-    public function setPhysical($physical)
-    {
-        $this->physical = (boolean)$physical;
+        if(!empty($price)){
+            $this->getItem()->setPrice($price);
+        }
         return $this;
     }
 }

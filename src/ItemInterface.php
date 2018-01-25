@@ -25,7 +25,7 @@ interface ItemInterface
      *
      * @return float
      */
-    public function getPrice(): float;
+    public function getPrice();
 
     /**
      * get quantity of an item
@@ -40,6 +40,6 @@ interface ItemInterface
      * 
      * @return boolean
      */
-    public function isPhysical();
+    public function isPhysical(): bool;
 
 }

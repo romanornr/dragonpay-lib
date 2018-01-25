@@ -1,6 +1,6 @@
 <?php
 
-namespace Dragonpay;
+namespace DragonPay;
 
 class Item implements ItemInterface
 {
@@ -13,6 +13,11 @@ class Item implements ItemInterface
      * @var string
      */
     protected $description;
+
+    /**
+     * @var float
+     */
+    protected $price;
 
     /**
      * @var string
@@ -32,7 +37,7 @@ class Item implements ItemInterface
     /**
      * @inheritdoc
      */
-    public function getCode()
+    public function getCode(): string
     {
         return $this->code;
     }
@@ -67,7 +72,7 @@ class Item implements ItemInterface
         return $this->description;
     }
 
-    public function isPhysical()
+    public function isPhysical(): bool
     {
         return $this->physical;
     }

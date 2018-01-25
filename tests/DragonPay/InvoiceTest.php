@@ -17,8 +17,6 @@ class InvoiceTest extends TestCase
     
     public function testGetPrice()
     {
-
-        $this->assertTrue(1 > -1);
         $this->assertNotNull($this->invoice);
         $this->assertNull($this->invoice->getPrice());
     }

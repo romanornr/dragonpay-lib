@@ -25,7 +25,7 @@ interface ItemInterface
      *
      * @return float
      */
-    public function getPrice();
+    public function getPrice(): ?float;
 
     /**
      * get quantity of an item

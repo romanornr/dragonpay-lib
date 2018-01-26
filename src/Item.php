@@ -45,7 +45,7 @@ class Item implements ItemInterface
     /**
      * @inheritdoc
      */
-    public function getPrice()
+    public function getPrice(): ?float
     {
         return $this->price;
     }

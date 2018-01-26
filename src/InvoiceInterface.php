@@ -23,7 +23,7 @@ interface InvoiceInterface
      */
     public function getPrice();
 
-    public function getCryptoCurrency();
+    public function getCurrency();
 
     public function getItem();
 

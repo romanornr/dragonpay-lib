@@ -43,7 +43,7 @@ class Invoice implements InvoiceInterface
     /**
      * @inheritdoc
      */
-    public function getCryptoCurrency()
+    public function getCurrency()
     {
         return $this->currency;
     }

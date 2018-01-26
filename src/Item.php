@@ -88,9 +88,15 @@ class Item implements ItemInterface
     /**
      * @return ItemInterface
      */
-    public function getQuantity(): integer
+    public function getQuantity(): ?int
     {
-        return $$this->quantity;
+        return $this->quantity;
+    }
+
+    public function setQuantity(int $quantity)
+    {
+        $this->quantity = (integer)$quantity;
+        return $this;
     }
 
 

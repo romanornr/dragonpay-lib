@@ -32,7 +32,9 @@ interface ItemInterface
      *
      * @return integer
      */
-    public function getQuantity(): integer;
+    public function getQuantity(): ?int;
+
+    public function setQuantity(int $quantity);
 
     /**
      * true: Indicates a physical item will be shipped (or picked up)

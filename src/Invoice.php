@@ -29,21 +29,47 @@ class Invoice implements InvoiceInterface
         return $this->getItem()->getPrice();
     }
 
-    public function getCryptoCurrency()
+    /**
+     * @inheritdoc
+     */
+    public function setPrice($price)
     {
-        if (!empty($price)) {
+        if(!empty($price)) {
             $this->getItem()->setPrice($price);
         }
         return $this;
     }
 
+    /**
+     * @inheritdoc
+     */
+    public function getCryptoCurrency()
+    {
+        return $this->currency;
+    }
+
+
+    /**
+     * @inheritdoc
+     */
     public function getItem()
     {
-        if (null == $this->item) {
-            $this->item = new \DragonPay\Item();
+        if(null == $this->item){
+            $this->item = new Item();
         }
-
         return $this->item;
+    }
+
+    /**
+     * @param ItemInterface $item
+     * @return InvoiceInterface
+     */
+    public function setItem(ItemInterface $item)
+    {
+        if(!empty($item)) {
+            $this->item = $item;
+        }
+        return $this;
     }
 
     public function getTransactionSpeed()

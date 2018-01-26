@@ -2,6 +2,8 @@
 
 namespace DragonPay;
 
+use Exception;
+
 class Item implements ItemInterface
 {
     /**
@@ -42,6 +44,26 @@ class Item implements ItemInterface
         return $this->code;
     }
 
+    public function setCode($code)
+    {
+        $this->code = $code;
+        return $this;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getDescription(): string
+    {
+        return $this->description;
+    }
+
+    public function setDescription($description)
+    {
+        $this->description = $description;
+        return $this;
+    }
+
     /**
      * @inheritdoc
      */
@@ -54,28 +76,55 @@ class Item implements ItemInterface
      * @param float $price
      * @return IntervoiceInterface
      */
-    public function setPrice($price): float
+    public function setPrice($price)
     {
-        if(!empty($price)){
-            $this->getItem()->setPrice($price);
+        if(is_string($price)){
+            $this->checkPriceFormat($price);
         }
+        $this->price = (float)$price;
         return $this;
     }
 
+    /**
+     * @return ItemInterface
+     */
     public function getQuantity(): integer
     {
         return $$this->quantity;
     }
 
-    public function getDescription(): string
-    {
-        return $this->description;
-    }
 
+    /**
+     * @param boolean $physical
+     * @return ItemInterface
+     */
     public function isPhysical(): bool
     {
         return $this->physical;
     }
 
+    /**
+     * @param boolean $physical
+     * @return ItemInterface
+     */
+    public function setPhysical($physical)
+    {
+        $this->physical = (boolean)$physical;
+        return $this;
+    }
+
+    /**
+     * Checks the new price for 0
+     * @param $price
+     * @throws Exception
+     */
+    protected function checkPriceFormat($price)
+    {
+        if($price === '0')
+            return;
+        $converted = (float)$price;
+        if($converted == 0)
+            throw new \InvalidArgumentException("Price must be formatted as a float ". $converted);
+    }
 
 }

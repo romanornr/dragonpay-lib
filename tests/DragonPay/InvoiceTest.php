@@ -20,4 +20,14 @@ class InvoiceTest extends TestCase
         $this->assertNotNull($this->invoice);
         $this->assertNull($this->invoice->getPrice());
     }
+
+    /**
+     * @depends testGetPrice
+     */
+    public function testSetPrice()
+    {
+        $this->assertNotNull($this->invoice);
+        $this->invoice->setPrice(9.99);
+        $this->assertSame(9.99, $this->invoice->getPrice());
+    }
 }

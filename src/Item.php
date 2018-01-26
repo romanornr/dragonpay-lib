@@ -39,7 +39,7 @@ class Item implements ItemInterface
     /**
      * @inheritdoc
      */
-    public function getCode(): string
+    public function getCode(): ?string
     {
         return $this->code;
     }
@@ -53,7 +53,7 @@ class Item implements ItemInterface
     /**
      * @inheritdoc
      */
-    public function getDescription(): string
+    public function getDescription(): ?string
     {
         return $this->description;
     }
@@ -120,10 +120,10 @@ class Item implements ItemInterface
      */
     protected function checkPriceFormat($price)
     {
-        if($price === '0')
+        if($price === '0' || $price == '.0')
             return;
         $converted = (float)$price;
-        if($converted == 0)
+        if($converted == 0 || is_float($converted) == false)
             throw new \InvalidArgumentException("Price must be formatted as a float ". $converted);
     }
 

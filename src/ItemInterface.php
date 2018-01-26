@@ -11,14 +11,14 @@ interface ItemInterface
      *
      * @return string
      */
-    public function getCode(): string;
+    public function getCode(): ?string;
 
     /**
      * Display an item description to the buyer
      *
      * @return string
      */
-    public function getDescription(): string;
+    public function getDescription(): ?string;
 
     /**
      * return price

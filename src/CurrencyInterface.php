@@ -5,24 +5,24 @@ namespace DragonPay;
 interface CurrencyInterface
 {
     /**
-     * @return string
+     * @return null|string
      */
-    public function getCode(): string;
+    public function getCode(): ?string;
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getSymbol(): string ;
+    public function getSymbol(): ?string ;
 
     /**
-     * @return string
+     * @return int|null
      */
-    public function getPrecision(): string;
+    public function getPrecision(): ?int;
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getExchangePercentFee(): string;
+    public function getExchangePercentageFee(): ?string;
 
     /**
      * @return bool
@@ -30,19 +30,19 @@ interface CurrencyInterface
     public function isPayoutEnabled(): bool;
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getName(): string;
+    public function getName(): ?string;
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getPluralName(): string;
+    public function getPluralName(): ?string;
 
     /**
      * @return array
      */
-    public function getAlts(): array;
+    public function getAlts();
 
     /**
      * @return array

@@ -40,6 +40,11 @@ class Currency implements CurrencyInterface
     protected $symbol;
 
     /**
+     * @var integer
+     */
+    protected $precision;
+
+    /**
      * @var string
      */
     protected $exchangePercentageFee;
@@ -48,6 +53,11 @@ class Currency implements CurrencyInterface
      * @var boolean
      */
     protected $payoutEnabled;
+
+    /**
+     * @var string
+     */
+    protected $name;
 
     /**
      * @var string
@@ -75,14 +85,14 @@ class Currency implements CurrencyInterface
     /**
      * @inheritdoc
      */
-    public function getCode(): string
+    public function getCode(): ?string
     {
         return $this->code;
     }
 
     public function setCode($code)
     {
-        if(null !== $code && in_array(strtoupper($code), self::$availableCurrencies)){
+        if(null !== $code && !in_array(strtoupper($code), self::$availableCurrencies)){
             throw new \InvalidArgumentException(sprintf('The currency of "%s" is not supported.', $code));
         }
 
@@ -94,7 +104,7 @@ class Currency implements CurrencyInterface
     /**
      * @inheritdoc
      */
-    public function getSymbol(): string
+    public function getSymbol(): ?string
     {
         return $this->symbol;
     }
@@ -103,7 +113,7 @@ class Currency implements CurrencyInterface
      * @param string $sybmbol
      * @return CurrencyInterface
      */
-    public function setSymbol(string $sybmbol)
+    public function setSymbol(string $symbol)
     {
         if(!empty($symbol) && ctype_print($symbol)){
             $this->symbol = trim($symbol);
@@ -114,7 +124,7 @@ class Currency implements CurrencyInterface
     /**
      * @inheritdoc
      */
-    public function getPrecision(): string
+    public function getPrecision(): ?int
     {
         return $this->precision;
     }
@@ -123,7 +133,7 @@ class Currency implements CurrencyInterface
      * @param integer $precision
      * @return CurrencyInterface
      */
-    public function setPrecision(int $precision): int
+    public function setPrecision(int $precision)
     {
         if(!empty($precision) && ctype_digit(strval($precision))){
             $this->precision = (int) $precision;
@@ -134,7 +144,7 @@ class Currency implements CurrencyInterface
     /**
      * @inheritdoc
      */
-    public function getExchangePercentFee(): string
+    public function getExchangePercentageFee(): ?string
     {
         return $this->exchangePercentageFee;
     }
@@ -160,9 +170,20 @@ class Currency implements CurrencyInterface
     }
 
     /**
+     * @param boolean $enabled
+     *
+     * @return CurrencyInterface
+     */
+    public function setPayoutEnabled($enabled)
+    {
+        $this->payoutEnabled = (boolean) $enabled;
+        return $this;
+    }
+
+    /**
      * @inheritdoc
      */
-    public function getName():string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -182,11 +203,10 @@ class Currency implements CurrencyInterface
     /**
      * @inheritdoc
      */
-    public function getPluralName(): string
+    public function getPluralName(): ?string
     {
         return $this->pluralName;
     }
-
 
     /**
      * @param string $pluralName
@@ -204,17 +224,16 @@ class Currency implements CurrencyInterface
     /**
      * @inheritdoc
      */
-    public function getAlts(): array
+    public function getAlts()
     {
-        $this->alts = $alts;
-        return $this;
+        return $this->alts;
     }
 
     /**
      * @param array $alts
      * @return CurrencyInterface
      */
-    public function setAlts(array $alts)
+    public function setAlts($alts)
     {
         $this->alts = $alts;
         return $this;

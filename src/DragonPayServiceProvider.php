@@ -29,7 +29,7 @@ class DragonPayServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        include __DIR__.'/../../Http/Controllers/TransactionController.php';
+        include __DIR__.'/../Http/Controllers/TransactionController.php';
 
         $this->app->singleton('dragonpay', function() {
             return new DragonPay(null);

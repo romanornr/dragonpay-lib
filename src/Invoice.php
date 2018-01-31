@@ -19,6 +19,8 @@ class Invoice implements InvoiceInterface
      */
     protected $item;
 
+    protected $status;
+
     /**
      * get price in BTC
      *
@@ -46,6 +48,14 @@ class Invoice implements InvoiceInterface
     public function getCurrency()
     {
         return $this->currency;
+    }
+
+    public function setCurrency($currency)
+    {
+        if(!empty($currency)){
+            $this->currency = $currency;
+        }
+        return $this;
     }
 
 
@@ -87,32 +97,52 @@ class Invoice implements InvoiceInterface
         // TODO: Implement getPosData() method.
     }
 
-    public function getStatus()
+    public function getStatus(): ?string
     {
-        // TODO: Implement getStatus() method.
+        return $this->status;
     }
 
-    public function getBtcPrice()
+    public function setStatus(?string $status)
+    {
+        if(!empty($status) && ctype_print($status)){
+            $this->status = trim($status);
+        }
+        return $this;
+    }
+
+    public function getBtcPrice(): string
     {
         // TODO: Implement getBtcPrice() method.
     }
 
-    public function getInvoiceTime()
+    public function getInvoiceTime(): \DateTime
     {
-        // TODO: Implement getInvoiceTime() method.
+        return $this->invoiceTime;
     }
 
-    public function getExpirationTime()
+    public function setInvoiceTime($invoiceTime)
+    {
+        if(is_a($invoiceTime, 'DateTime')){
+            $this->invoiceTime = $invoiceTime;
+        }else if(is_numeric($invoiceTime)){
+            $invoiceDateTime = new \DateTime();
+            $invoiceDateTime->setTimestamp($invoiceTime);
+            $this->invoiceTime = $invoiceDateTime;
+        }
+        return $this;
+    }
+
+    public function getExpirationTime(): \DateTime
     {
         // TODO: Implement getExpirationTime() method.
     }
 
-    public function getCurrentTime()
+    public function getCurrentTime(): \DateTime
     {
         // TODO: Implement getCurrentTime() method.
     }
 
-    public function getOrderId()
+    public function getOrderId(): string
     {
         // TODO: Implement getOrderId() method.
     }
@@ -130,5 +160,30 @@ class Invoice implements InvoiceInterface
     public function isPhysical()
     {
         // TODO: Implement isPhysical() method.
+    }
+
+    public function getNotificationEmail()
+    {
+        // TODO: Implement getNotificationEmail() method.
+    }
+
+    public function isExtendedNotifications()
+    {
+        // TODO: Implement isExtendedNotifications() method.
+    }
+
+    public function isFullNotifications()
+    {
+        // TODO: Implement isFullNotifications() method.
+    }
+
+    public function getUrl(): string
+    {
+        // TODO: Implement getUrl() method.
+    }
+
+    public function getId()
+    {
+        // TODO: Implement getId() method.
     }
 }

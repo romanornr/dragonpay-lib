@@ -7,7 +7,10 @@ use DragonPay\InvoiceInterface;
 use GuzzleHttp;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Query;
+use Money\Money;
 use Psr\Http\Message\RequestInterface;
+use Money\Currency;
+use Money\Exchange\SwapExchange;
 
 class Client implements ClientInterface
 {
@@ -28,27 +31,49 @@ class Client implements ClientInterface
         $this->network = $network;
     }
 
-    public function createInvoice()
+    public function createInvoice(InvoiceInterface $invoice)
     {
-        $request = $this->createNewRequest();
+        //$request = $this->createNewRequest();
         //$this->request->setMethod(Request::METHOD_GET);
-        //$this->response = $this->sentRequest($this->request);
-        $body = json_decode($request->getBody(), true);
-        return dd($body);
-        if (empty($body)) {
-            throw new \Exception('Error with request: no data returned');
-        }
+//        //$this->response = $this->sentRequest($this->request);
+//        $body = json_decode($request->getBody(), true);
+//        return dd($body);
+//        if (empty($body)) {
+//            throw new \Exception('Error with request: no data returned');
+//        }
+
+        $currency = new Currency('USD');
+        $currencySymbol = $currency->getCode();
+
+        $currency = $invoice->getCurrency();
+        $item = $invoice->getItem();
+
+        $date = new \DateTime();
+        $invoiceTime = $date->getTimestamp();
+        $currentTime = $date->getTimestamp();
+
+
+        // $item = $invoice->getItem();
+
+        $invoice->getCurrency();
+
+        $invoice
+            ->setPrice($invoice->getPrice())
+            ->setInvoiceTime($invoiceTime)
+            ->setStatus($invoice::STATUS_NEW)
+            ->setCurrency($currencySymbol);
+
+        return $invoice;
 
     }
 
-    public function createNewRequest()
+    public function createNewRequest(string $host, string $method)
     {
 
-        //$request = new Request('GET', 'https://bittrex.com/api/v1.1/public/getmarkets');
         $client = new GuzzleHttp\Client();
         $headers = $this->prepareRequestHeaders();
-        $host = 'https://bittrex.com/api/v1.1/public/getmarkets';
-        $method = 'GET';
+        //$host = 'https://bittrex.com/api/v1.1/public/getmarkets';
+        //$method = 'GET';
         $request =  $client->request($method, $host, $headers);
 
         return $request;

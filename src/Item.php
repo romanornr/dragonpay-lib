@@ -95,7 +95,7 @@ class Item implements ItemInterface
 
     public function setQuantity(int $quantity)
     {
-        $this->quantity = (integer)$quantity;
+        return $this->quantity = (integer)$quantity;
         return $this;
     }
 

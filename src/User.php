@@ -87,8 +87,8 @@ class User implements UserInterface
      */
     public function setEmail(string $email): UserInterface
     {
-        if(!empty($email) && is_string($email) && ctype_print($email)){
-            this->$email = trim($email);
+        if (!empty($email) && is_string($email) && ctype_print($email)) {
+            $this->email = trim($email);
         }
         return $this;
     }

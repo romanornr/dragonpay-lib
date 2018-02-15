@@ -1,5 +1,9 @@
 <?php
 
+namespace DragonPay\Address;
+
+use BitWasp\Bitcoin\Key\Deterministic\HierarchicalKey;
+
 abstract class Address
 {
     protected $xpub;

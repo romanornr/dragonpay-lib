@@ -1,8 +1,10 @@
 <?php
 
+namespace DragonPay\Address;
+
 class AddressFactory
 {
-    public function createOrderAddress(string $xpub, string $type, int $orderid)
+    public static function getAddress(string $xpub, string $type, int $orderid)
     {
         if(empty($xpub)){
             throw new Exception("No xpub passed");

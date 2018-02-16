@@ -26,7 +26,7 @@ class TransactionController extends Controller
         //return dd($explorer->getExplorer(ExplorerManager::BITCOIN)->auditTransaction('34qkc2iac6RsyxZVfyE2S5U5WcRsbg2dpK'));
 
         $d = new \DragonPay\DragonPay();
-        $d = DragonPay\Address\AddressFactory::getAddress('xpub6DBfFoZHK5ZCzuoViVTzmRTf91DEVvYoifJQToHhHAwS2pmyeQCfQ5pqCg65WYBB2jnyDtoPRdpLVgwH5UpFswFX1qNtD4ccpZJXB9fqkQA', 'legacy', 2);
+        $d = DragonPay\Address\AddressFactory::getAddress('segwit', 'xpub6DBfFoZHK5ZCzuoViVTzmRTf91DEVvYoifJQToHhHAwS2pmyeQCfQ5pqCg65WYBB2jnyDtoPRdpLVgwH5UpFswFX1qNtD4ccpZJXB9fqkQA', 2);
 
     return dd($d->createOrderAddress());
 

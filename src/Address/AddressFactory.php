@@ -15,7 +15,7 @@ class AddressFactory
                 return new LegacyAddress($xpub, $orderid);
                 break;
             case 'segwit':
-                return new SegwitAdress($xpub, $orderid);
+                return new SegwitAddress($xpub, $orderid);
                 break;
             default:
                 throw new Exception("Type not valid. Choos legacy or segwit");

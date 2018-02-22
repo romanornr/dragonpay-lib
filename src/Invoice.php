@@ -34,7 +34,7 @@ class Invoice implements InvoiceInterface
     /**
      * @inheritdoc
      */
-    public function setPrice($price)
+    public function setPrice(float $price)
     {
         if(!empty($price)) {
             $this->getItem()->setPrice($price);
@@ -70,6 +70,23 @@ class Invoice implements InvoiceInterface
         return $this->item;
     }
 
+    public function getBuyer(): BuyerInterface
+    {
+        if($this->buyer == null){
+            $this->buyer = new Buyer();
+        }
+
+        return $this->buyer;
+    }
+
+    public function setBuyer(BuyerInterface $buyer): InvoiceInterface
+    {
+        if(!empty($buyer)){
+            $this->buyer = $buyer;
+        }
+        return $this;
+    }
+
     /**
      * @param ItemInterface $item
      * @return InvoiceInterface
@@ -81,6 +98,10 @@ class Invoice implements InvoiceInterface
         }
         return $this;
     }
+
+    /**
+     * @return string|void
+     */
 
     public function getTransactionSpeed()
     {

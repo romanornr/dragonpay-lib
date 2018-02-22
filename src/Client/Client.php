@@ -33,37 +33,38 @@ class Client implements ClientInterface
 
     public function createInvoice(InvoiceInterface $invoice)
     {
-        //$request = $this->createNewRequest();
-        //$this->request->setMethod(Request::METHOD_GET);
-//        //$this->response = $this->sentRequest($this->request);
-//        $body = json_decode($request->getBody(), true);
-//        return dd($body);
-//        if (empty($body)) {
-//            throw new \Exception('Error with request: no data returned');
-//        }
-
+        
         $currency = new Currency('USD');
         $currencySymbol = $currency->getCode();
 
         $currency = $invoice->getCurrency();
         $item = $invoice->getItem();
+        //$buyer
 
         $date = new \DateTime();
         $invoiceTime = $date->getTimestamp();
         $currentTime = $date->getTimestamp();
+       // $invoice->setPrice($item->getPrice());
 
 
         // $item = $invoice->getItem();
 
         $invoice->getCurrency();
+        //return dd($invoice->getPrice());
 
         $invoice
-            ->setPrice($invoice->getPrice())
             ->setInvoiceTime($invoiceTime)
             ->setStatus($invoice::STATUS_NEW)
             ->setCurrency($currencySymbol);
 
-        return $invoice;
+        $client = new \GuzzleHttp\Client();
+        $url = "http://127.0.0.1:8000/api/invoices";
+
+
+        $response = $client->request("POST", $url, ['price' => 2]);
+        return dd($response);
+
+        //return $invoice;
 
     }
 
@@ -75,6 +76,9 @@ class Client implements ClientInterface
         //$host = 'https://bittrex.com/api/v1.1/public/getmarkets';
         //$method = 'GET';
         $request =  $client->request($method, $host, $headers);
+        $response = $client->post('127.0.0.1:8000/api/invoices', [
+           GuzzleHttp\RequestOptions::JSON => []
+        ]);
 
         return $request;
         //return dd(json_decode($request->getBody()));

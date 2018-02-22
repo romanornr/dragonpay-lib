@@ -33,6 +33,10 @@ interface InvoiceInterface
      */
     public function getItem();
 
+    /**
+     * @return BuyerInterface
+     */
+    public function getBuyer(): BuyerInterface;
 
     /**
      * @return string

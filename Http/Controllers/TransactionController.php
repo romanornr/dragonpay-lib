@@ -25,6 +25,10 @@ class TransactionController extends Controller
         //dd($explorer->totalReceived('1J7FCFaafPRxqu4X9VsaiMZr1XMemx69GR'));
         //return dd($explorer->getExplorer(ExplorerManager::BITCOIN)->auditTransaction('34qkc2iac6RsyxZVfyE2S5U5WcRsbg2dpK'));
 
+        $x = new Rates\CryptoCompare();
+        $a = $x->fiatIntoSatoshi(10, 'USD', 'VIA');
+        return dd($a);
+
         $d = new \DragonPay\DragonPay();
         $d = DragonPay\Address\AddressFactory::getAddress('segwit', 'xpub6DBfFoZHK5ZCzuoViVTzmRTf91DEVvYoifJQToHhHAwS2pmyeQCfQ5pqCg65WYBB2jnyDtoPRdpLVgwH5UpFswFX1qNtD4ccpZJXB9fqkQA', 2);
 

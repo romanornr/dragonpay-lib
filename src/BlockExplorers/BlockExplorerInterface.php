@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: romano
- * Date: 12/27/17
- * Time: 9:28 PM
- */
 
 namespace DragonPay\BlockExplorers;
 use GuzzleHttp\Client;

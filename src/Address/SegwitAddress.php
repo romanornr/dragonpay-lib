@@ -11,12 +11,12 @@ use BitWasp\Bitcoin\Address\AddressFactory;
 class SegwitAddress extends Address
 {
     protected $xpub;
-    protected $orderid;
+    protected $key_path;
 
-    public function __construct(string $xpub, int $orderid)
+    public function __construct(string $xpub, int $key_path)
     {
         $this->xpub = $xpub;
-        $this->orderid = $orderid;
+        $this->key_path = $key_path;
     }
 
     public function toAddress(HierarchicalKey $key)
@@ -31,7 +31,7 @@ class SegwitAddress extends Address
         $purposePub = $this->xpub;
         $xpub = HierarchicalKeyFactory::fromExtended($purposePub);
 
-        $orderAddress = $this->toAddress($xpub->derivePath("0/{$this->orderid}")); //orderid as childkey
+        $orderAddress = $this->toAddress($xpub->derivePath("0/{$this->key_path}")); //key_path as childkey
         return $orderAddress->getAddress();
     }
 

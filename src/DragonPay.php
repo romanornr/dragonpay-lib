@@ -82,6 +82,11 @@ class DragonPay
         return Helpers::convertIntoSatoshi($price);
     }
 
+    public function SatoshiToCrypto(int $satoshi): float
+    {
+        return (float) $satoshi / 100000000;
+    }
+
     /**
      * Create a payment QR code by the address and bitcoin/crypto amount
      *
@@ -89,9 +94,9 @@ class DragonPay
      * @param $amount
      * @return string
      */
-    public function createQRcode(string $address, float $amount): string
+    public function createQRcode(string $address, string $cryptocurrency, float $amount): string
     {
-        return "https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl={$this->currency}:{$address}?amount={$amount}";
+        return "https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl={$cryptocurrency}:{$address}?amount={$amount}";
     }
 }
 

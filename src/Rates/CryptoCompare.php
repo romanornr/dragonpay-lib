@@ -19,15 +19,16 @@ class CryptoCompare implements RatesInterface
         ]);
     }
 
-    public function fiatIntoCrypto(float $fiatAmount, string $fiatCurrency, string $cryptoCurrency)
+    public function fiatIntoCrypto(float $fiatAmount, string $fiatCurrency, string $cryptocurrency)
     {
-        $response = $this->client->get('data/price?fsym=' . $fiatCurrency . '&tsyms=' . $cryptoCurrency)->getBody();
+        $cryptocurrency = strtoupper($cryptocurrency);
+        $response = $this->client->get('data/price?fsym=' . $fiatCurrency . '&tsyms=' .$cryptocurrency)->getBody();
         $json = json_decode($response, true);
-        $price = $json[$cryptoCurrency];
-        return $price;
+        $price = $json[$cryptocurrency];
+        return $price * $fiatAmount;
     }
 
-    public function fiatIntoSatoshi(float $fiatAmount, string $fiatCurrency, string $cryptoCurrency)
+    public function fiatIntoSatoshi(float $fiatAmount, string $fiatCurrency, string $cryptoCurrency): int
     {
         $crypto = $this->fiatIntoCrypto($fiatAmount, $fiatCurrency, $cryptoCurrency);
         $this->satoshi = $crypto * 100000000;

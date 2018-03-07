@@ -19,6 +19,20 @@
         "guzzlehttp/guzzle": "^6.3",
         "moneyphp/money": "^3.1"
     },
+    "repositories": [
+        {
+            "type":"package",
+            "package": {
+                "name": "Prospect/Currency",
+                "version":"master",
+                "source": {
+                    "url": "https://github.com/chainfailure/prospect.git",
+                    "type": "git",
+                    "reference":"master"
+                }
+            }
+        }
+    ],
     "require-dev": {
         "phpunit/phpunit": "^6.5.5"
     },

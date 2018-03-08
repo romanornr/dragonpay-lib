@@ -9,6 +9,7 @@ use BitWasp\Bitcoin\Key\Deterministic\HierarchicalKey;
 use BitWasp\Bitcoin\Script\P2shScript;
 use BitWasp\Bitcoin\Script\ScriptFactory;
 use DragonPay\Helpers;
+use Prospect\Currency;
 
 class DragonPay
 {
@@ -97,6 +98,15 @@ class DragonPay
     public function createQRcode(string $address, string $cryptocurrency, float $amount): string
     {
         return "https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl={$cryptocurrency}:{$address}?amount={$amount}";
+    }
+
+    public function isPaid(string $symbol, string $address, int $satoshi): bool
+    {
+        $cryptocurrency = Currency::get($symbol);
+        $address = $cryptocurrency->getAddress($address);
+        $totalReceived = $address->getTotalReceived();
+        if($totalReceived >= $satoshi) return true;
+        return false;
     }
 }
 

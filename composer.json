@@ -12,9 +12,7 @@
             "email": "ubohyoshin@protonmail.com"
         }
     ],
-    "repositories": [
-        { "type": "vcs", "url": "https://github.com/chainfailure/prospect" }
-    ],
+    "minimum-stability": "dev",
     "require": {
         "bitwasp/bitcoin": "^v0.0.34.1",
         "symfony/polyfill-iconv": "^1.6",

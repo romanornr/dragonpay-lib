@@ -6,14 +6,16 @@ use BitWasp\Bitcoin\Key\Deterministic\HierarchicalKeyFactory;
 use BitWasp\Bitcoin\Address\AddressFactory;
 use BitWasp\Bitcoin\Key\Deterministic\HierarchicalKey;
 use BitWasp\Bitcoin\Script\ScriptFactory;
+use BitWasp\Bitcoin\Network\Network;
 
 class LegacyAddress extends Address
 {
     protected $xpub;
     protected $key_path;
 
-    public function __construct(string $xpub, int $key_path)
+    public function __construct(Network $network, string $xpub, int $key_path)
     {
+        $this->network = $network;
         $this->xpub = $xpub;
         $this->key_path = $key_path;
     }
@@ -27,10 +29,10 @@ class LegacyAddress extends Address
     public function createOrderAddress()
     {
         $purposePub = $this->xpub;
-        $xpub = HierarchicalKeyFactory::fromExtended($purposePub);
+        $xpub = HierarchicalKeyFactory::fromExtended($purposePub, $this->network);
 
         $orderAddress = $this->toAddress($xpub->derivePath("0/{$this->key_path}")); //key_path as childkey
-        return $orderAddress->getAddress();
+        return $orderAddress->getAddress($this->network);
     }
 
 }

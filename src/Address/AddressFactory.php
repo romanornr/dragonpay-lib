@@ -2,8 +2,10 @@
 
 namespace DragonPay\Address;
 
+use BitWasp\Bitcoin\Network\Network;
 use BitWasp\Bitcoin\Network\NetworkFactory;
 use DragonPay\CryptoCurrencies\Cryptocurrency;
+
 
 class AddressFactory
 {
@@ -13,14 +15,14 @@ class AddressFactory
             throw new Exception("No xpub passed");
         }
 
-        return dd($cryptocurrency->getNetwork());
+        $network = $cryptocurrency->getNetwork();
 
         switch ($type){
             case 'legacy':
-                return new LegacyAddress($xpub, $key_path);
+                return new LegacyAddress($network, $xpub, $key_path);
                 break;
             case 'segwit':
-                return new SegwitAddress($xpub, $key_path);
+                return new SegwitAddress($network, $xpub, $key_path);
                 break;
             default:
                 throw new Exception("Type not valid. Choos legacy or segwit");

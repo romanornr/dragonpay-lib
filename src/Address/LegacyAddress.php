@@ -26,7 +26,7 @@ class LegacyAddress extends Address
         return AddressFactory::fromOutputScript($script);
     }
 
-    public function createOrderAddress()
+    public function createPaymentAddress()
     {
         $purposePub = $this->xpub;
         $xpub = HierarchicalKeyFactory::fromExtended($purposePub, $this->network);

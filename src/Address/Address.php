@@ -18,5 +18,5 @@ abstract class Address
     }
 
     abstract public function toAddress(HierarchicalKey $key);
-    abstract public function createOrderAddress();
+    abstract public function createPaymentAddress();
 }

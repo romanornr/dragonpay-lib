@@ -9,6 +9,11 @@ class CryptocurrencyFactory
         return new Bitcoin();
     }
 
+    public static function bitcointestnet(): Cryptocurrency
+    {
+        return new BitcoinTestnet();
+    }
+
     public static function viacoin(): Cryptocurrency
     {
         return new Viacoin();

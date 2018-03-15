@@ -13,9 +13,9 @@ class DragonPayServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->loadRoutesFrom(__DIR__.'/routes.php');
-        $this->loadViewsFrom(__DIR__.'/../../views', 'DragonPay');
-        $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
+        // $this->loadRoutesFrom(__DIR__.'/routes.php');
+        // $this->loadViewsFrom(__DIR__.'/../../views', 'DragonPay');
+        // $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
 
         $this->publishes([
             __DIR__.'/../../assets' => public_path('vendor/DragonPay'),
@@ -29,7 +29,7 @@ class DragonPayServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        include __DIR__.'/../Http/Controllers/TransactionController.php';
+        // include __DIR__.'/../Http/Controllers/TransactionController.php';
 
         $this->app->singleton('dragonpay', function() {
             return new DragonPay(null);

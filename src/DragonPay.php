@@ -100,6 +100,26 @@ class DragonPay
         return "https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl={$cryptocurrency}:{$address}?amount={$amount}";
     }
 
+    /**
+     * Check if xpub is ever been used. Check addresses.
+     *
+     * @param string $symbol
+     * @param array $addresses
+     * @return bool
+     */
+    public function isMasterPublicKeyUsed(string $symbol, array $addresses): bool
+    {
+        $cryptocurrency = Currency::get($symbol);
+        $addresses = $cryptocurrency->getAddresses($addresses);
+
+        foreach ($addresses as $address){
+            if ($address->getTotalReceived() > 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public function isPaid(string $symbol, string $address, int $satoshi): bool
     {
         $cryptocurrency = Currency::get($symbol);
